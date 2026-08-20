@@ -6,7 +6,7 @@
 	--orange-soft: rgba(255, 107, 44, 0.16);
 	--line: rgba(245, 240, 232, 0.14);
 	--glass: rgba(10, 12, 16, 0.7);
-	--glass-border: rgba(255, 255, 255, 0.18);
+	--glass-border:  rgba(255, 255, 255, 0.705);
 }
 
 body.light-mode {
