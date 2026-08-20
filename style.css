@@ -241,6 +241,7 @@ body.light-mode .hero::after {
   height: 52px;
   width: auto;
   display: block;
+  transition: opacity 0.25s ease-in-out;
 }
 
 .hero-nav-links {
@@ -253,7 +254,7 @@ body.light-mode .hero::after {
   font-weight: 600;
   letter-spacing: 0.1em;
   color: var(--nav-text);
-  transition: color 0.3s;
+  transition: color 0.45s ease-in-out;
 }
 
 .hero-nav-links a:hover {
