@@ -7,7 +7,7 @@
     );
   }
 
-  var HOME_URL = window.location.origin + "/index.html";
+  var HOME_URL = "https://aegis-preflight.vercel.app/index.html";
 
   function redirectIfNoAuth() {
     if (!sb) { window.location.href = HOME_URL; return; }

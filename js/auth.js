@@ -1,5 +1,5 @@
 (function () {
-  var REDIRECT_URL = window.location.origin + "/pages/dashboard.html";
+  var REDIRECT_URL = "https://aegis-preflight.vercel.app/pages/dashboard.html";
 
   function getSupabase() {
     if (window.__aegis && window.__aegis.supabase) return window.__aegis.supabase;
