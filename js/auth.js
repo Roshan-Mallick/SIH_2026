@@ -60,7 +60,8 @@
     if (!sb) return;
     sb.auth.signInWithOAuth({
       provider: "github",
-      options: { redirectTo: REDIRECT_URL },
+    }).then(function (res) {
+      if (res.error) console.error("[aegis] GitHub OAuth error:", res.error);
     });
   }
 

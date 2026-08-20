@@ -52,7 +52,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!sb) { showMessage("Auth not configured.", true); return; }
     sb.auth.signInWithOAuth({
       provider: "github",
-      options: { redirectTo: REDIRECT_URL },
+    }).then(({ error }) => {
+      if (error) console.error("[aegis] GitHub OAuth error:", error);
     });
   });
 
