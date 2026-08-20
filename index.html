@@ -46,7 +46,7 @@
             </p>
 
             <div class="hero-btns">
-              <a href="#" class="hero-btn hero-btn-primary">Sign Up</a>
+              <button type="button" class="hero-btn hero-btn-primary" id="open-signup">Sign Up</button>
               <button type="button" class="hero-btn hero-btn-secondary" id="open-login">Log In</button>
             </div>
 
@@ -202,6 +202,42 @@
     </footer>
   </main>
 
+  <div class="login-overlay" id="signup-overlay" aria-hidden="true">
+    <div class="login-modal" role="dialog" aria-labelledby="signup-title" aria-modal="true">
+      <button class="login-close" type="button" aria-label="Close signup" id="close-signup">&times;</button>
+      <div class="login-header">
+        <img class="login-logo" id="signup-logo" src="assets/images/logo-dark.png" alt="Aegis" />
+        <h2 id="signup-title">Create your account</h2>
+        <p>Start securing your AI-generated code today.</p>
+      </div>
+      <form class="login-form" id="signup-form" autocomplete="off">
+        <label class="login-field">
+          <span class="login-label">Full Name</span>
+          <input type="text" name="name" placeholder="Jane Doe" required />
+        </label>
+        <label class="login-field">
+          <span class="login-label">Email</span>
+          <input type="email" name="email" placeholder="you@company.com" required />
+        </label>
+        <label class="login-field">
+          <span class="login-label">Password</span>
+          <input type="password" name="password" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" required />
+        </label>
+        <label class="login-field">
+          <span class="login-label">Confirm Password</span>
+          <input type="password" name="confirm" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" required />
+        </label>
+        <div class="login-options">
+          <label class="login-remember">
+            <input type="checkbox" required /> I agree to the <a href="#" class="login-forgot">Terms</a>
+          </label>
+        </div>
+        <button type="submit" class="login-submit">Create Account</button>
+      </form>
+      <p class="login-footer">Already have an account? <a href="#" id="switch-to-login">Sign in</a></p>
+    </div>
+  </div>
+
   <div class="login-overlay" id="login-overlay" aria-hidden="true">
     <div class="login-modal" role="dialog" aria-labelledby="login-title" aria-modal="true">
       <button class="login-close" type="button" aria-label="Close login" id="close-login">&times;</button>
@@ -227,7 +263,7 @@
         </div>
         <button type="submit" class="login-submit">Sign In</button>
       </form>
-      <p class="login-footer">Don't have an account? <a href="#">Sign up</a></p>
+      <p class="login-footer">Don't have an account? <a href="#" id="switch-to-signup">Sign up</a></p>
     </div>
   </div>
 
