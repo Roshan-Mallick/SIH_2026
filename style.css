@@ -17,11 +17,11 @@
 }
 
 body.light-mode {
-  --bg: #f2eee8;
+  --bg: #cbb9a7;
   --text: #211b18;
   --muted: rgba(33, 27, 24, 0.62);
-  --glass: rgba(255, 255, 255, 0.48);
-  --glass-border: rgba(35, 28, 24, 0.16);
+  --glass: rgba(74, 55, 43, 0.3);
+  --glass-border: rgba(255, 255, 255, 0.28);
   --nav-text: rgba(35, 28, 24, 0.68);
   --body-copy: rgba(35, 28, 24, 0.68);
   --line: rgba(35, 28, 24, 0.14);
@@ -84,7 +84,7 @@ a {
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: linear-gradient(145deg, #f5f1ec, #e4ddd4, #f8f5f0);
+  background: linear-gradient(145deg, #cbb9a7, #b5a18e, #d5c5b5);
   opacity: 0;
   transition: opacity 0.45s ease-in-out;
 }
