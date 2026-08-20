@@ -74,13 +74,13 @@ export default async function AccountOverview() {
         </div>
 
         {/* C. License */}
-        <div style={{ padding: '24px', border: '1px solid var(--line)', borderRadius: '12px', background: 'rgba(255,255,255,0.02)' }}>
+        <div style={{ padding: '24px', border: '1px solid var(--line)', borderRadius: '12px', background: 'rgba(255,255,255,0.02)', display: 'flex', flexDirection: 'column' }}>
           <div style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '0.14em', color: 'var(--muted)', marginBottom: '16px' }}>LICENSE</div>
           
           {license ? (
             <>
               <p style={{ fontSize: '24px', fontFamily: 'Space Grotesk, sans-serif', color: '#4ade80', marginBottom: '24px' }}>{license.status.toUpperCase()}</p>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '24px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '24px', flex: 1 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px' }}>
                   <span style={{ color: 'var(--muted)' }}>Activations</span>
                   <span>{license.activation_count} / {license.activation_limit}</span>
@@ -90,15 +90,15 @@ export default async function AccountOverview() {
                   <span>{license.expires_at ? new Date(license.expires_at).toLocaleDateString() : 'Never'}</span>
                 </div>
               </div>
-              <Link href="/account/license" className="hero-btn hero-btn-secondary" style={{ width: '100%', textAlign: 'center', padding: '10px', fontSize: '12px', display: 'block' }}>
+              <Link href="/account/license" className="hero-btn hero-btn-secondary" style={{ width: '100%', textAlign: 'center', padding: '10px', fontSize: '12px', display: 'block', marginTop: 'auto' }}>
                 Manage License
               </Link>
             </>
           ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
               <p style={{ fontSize: '16px', marginBottom: '8px' }}>Basic / Limited</p>
               <p style={{ fontSize: '13px', color: 'var(--muted)', marginBottom: '24px', flex: 1 }}>Free plan access is active. Upgrade your plan to unlock full Aegis PreFlight licensing.</p>
-              <Link href="/pricing" className="hero-btn hero-btn-primary" style={{ width: '100%', textAlign: 'center', padding: '10px', fontSize: '12px', display: 'block' }}>
+              <Link href="/pricing" className="hero-btn hero-btn-primary" style={{ width: '100%', textAlign: 'center', padding: '10px', fontSize: '12px', display: 'block', marginTop: 'auto' }}>
                 Upgrade
               </Link>
             </div>

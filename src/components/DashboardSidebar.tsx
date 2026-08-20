@@ -12,7 +12,7 @@ export function DashboardSidebar({ userEmail }: { userEmail: string | undefined 
     { name: 'Subscription', href: '/account/subscription' },
     { name: 'License', href: '/account/license' },
     { name: 'Billing', href: '/account/billing' },
-    { name: 'Downloads', href: '/downloads' },
+    { name: 'Downloads', href: '/account/downloads' },
     { name: 'Settings', href: '/account/settings' }
   ];
 
