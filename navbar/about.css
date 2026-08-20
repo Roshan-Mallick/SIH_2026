@@ -49,30 +49,36 @@ body.light-mode::after { opacity: 1; }
 
 a { color: inherit; text-decoration: none; }
 
-.site-shell { width: min(1100px, calc(100% - 48px)); margin: 22px auto 0; padding: 20px; }
+.site-shell {
+	width: min(1100px, calc(100% - 48px));
+	margin: 22px auto 0;
+	padding: 20px;
+	box-sizing: border-box;
+}
 
 .site-nav {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	padding: 28px 48px 40px;
+	padding: 20px 48px 40px;
+	box-sizing: border-box;
 	background: var(--glass);
 	border: 1px solid var(--glass-border);
-	border-radius: 28px 28px 0 0;
+	border-radius: 30px 30px 0 0;
 	border-bottom-color: var(--line);
 	backdrop-filter: blur(24px);
 	-webkit-backdrop-filter: blur(24px);
 	transition: background 0.45s ease-in-out, border-color 0.45s ease-in-out;
 }
 
-.site-logo img { display: block; width: auto; height: 52px; }
-.site-logo img { transition: opacity 0.25s ease-in-out; }
+.site-logo { display: flex; align-items: center;}
+.site-logo img { display: block; width: auto; height: 52px; transition: opacity 0.25s ease-in-out; }
 .nav-links { display: flex; align-items: center; gap: 32px; }
 .nav-links a { color: var(--muted); font-size: 12px; font-weight: 600; letter-spacing: 0.1em; transition: color 0.45s ease-in-out; }
 .nav-links a:hover, .nav-links a[aria-current="page"] { color: var(--orange); }
 
 .theme-toggle {
-	width: 36px;
+	width: 34px;
 	height: 34px;
 	display: grid;
 	place-items: center;
@@ -99,13 +105,13 @@ main {
 	transition: background 0.45s ease-in-out, border-color 0.45s ease-in-out;
 }
 
-.page-orbs { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+.page-orbs { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none;}
 .orb { position: absolute; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #ffb088, #e8572a 58%, #a82d0e); box-shadow: 0 0 70px rgba(232, 87, 42, 0.3); }
 .orb-large { width: 300px; height: 300px; top: -110px; right: -40px; }
 .orb-small { width: 100px; height: 100px; bottom: 13%; left: -34px; }
 .orb-ring { width: 130px; height: 130px; top: 34%; left: -62px; border: 10px solid rgba(232, 87, 42, 0.48); background: transparent; box-shadow: none; }
 
-.about-hero { padding: 105px 0 115px; max-width: 830px; }
+.about-hero { padding: 50px 0 115px; max-width: 830px; }
 .eyebrow, .section-label, .card-kicker { color: var(--orange); font-size: 10px; font-weight: 700; letter-spacing: 0.2em; }
 .eyebrow { margin: 0 0 22px; }
 h1, h2, h3 { font-family: "Space Grotesk", sans-serif; }
@@ -115,7 +121,7 @@ h1 span, h2 span { color: var(--orange); }
 .hero-copy { max-width: 620px; margin: 0; color: var(--muted); font-size: 16px; line-height: 1.7; }
 .section-rule { padding: 76px 0; border-top: 1px solid var(--line); }
 .definition, .authority-content, .direction-content { display: grid; grid-template-columns: 0.55fr 1.45fr; gap: 52px; }
-h2 { margin-bottom: 24px; font-size: clamp(34px, 4.2vw, 56px); line-height: 1.02; letter-spacing: -0.055em; }
+h2 { margin-top: 25px; margin-bottom: 24px; font-size: clamp(34px, 4.2vw, 56px); line-height: 1.02; letter-spacing: -0.055em; }
 blockquote { max-width: 710px; margin: 0; padding-left: 24px; border-left: 2px solid var(--orange); color: var(--text); font-size: clamp(19px, 2vw, 25px); line-height: 1.45; }
 .section-heading { display: flex; justify-content: space-between; gap: 32px; margin-bottom: 40px; }
 .principles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
@@ -134,7 +140,7 @@ blockquote { max-width: 710px; margin: 0; padding-left: 24px; border-left: 2px s
 .direction-content { align-items: start; }
 .roadmap { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; }
 .roadmap-item { display: grid; grid-template-columns: 44px 1fr; gap: 5px 14px; padding: 18px 0; border-bottom: 1px solid var(--line); }
-.roadmap-item > span { grid-row: span 2; color: var(--muted); font-size: 11px; }
+.roadmap-item > span { grid-row: span 2; color: var(--orange); font-size: 11px; }
 .roadmap-item strong { font: 700 16px "Space Grotesk", sans-serif; letter-spacing: 0.08em; }
 .roadmap-item small { color: var(--muted); font-size: 13px; }
 .roadmap-item.active strong, .roadmap-item.active > span { color: var(--orange); }

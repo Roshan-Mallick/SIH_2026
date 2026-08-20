@@ -246,6 +246,7 @@ body.light-mode .hero::after {
 
 .hero-nav-links {
   display: flex;
+  align-items: center;
   gap: 32px;
 }
 
@@ -261,12 +262,18 @@ body.light-mode .hero::after {
   color: var(--orange);
 }
 
+.hero-nav-links .active{
+  color: var(--orange);
+}
+
 .theme-toggle {
   width: 34px;
   height: 34px;
   display: inline-grid;
   place-items: center;
   padding: 0;
+  font: inherit;
+  line-height: 1;
   border: 1px solid var(--glass-border);
   border-radius: 50%;
   color: var(--orange);
