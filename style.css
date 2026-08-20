@@ -258,7 +258,7 @@ body.light-mode .hero::after {
 }
 
 .hero-nav-links a:hover {
-  color: var(--text);
+  color: var(--orange);
 }
 
 .theme-toggle {
