@@ -40,10 +40,38 @@ html {
 body {
   margin: 0;
   overflow-x: hidden;
+  position: relative;
   color: var(--text);
   background: var(--bg);
   font-family: "DM Sans", sans-serif;
   transition: color 0.45s ease-in-out, background-color 0.45s ease-in-out;
+}
+
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  transition: opacity 0.45s ease-in-out;
+}
+
+body::before {
+  background: linear-gradient(145deg, #090a0d, #111317, #08090b);
+}
+
+body::after {
+  background: linear-gradient(145deg, #eadbca, #d8c4b0, #f0e4d7);
+  opacity: 0;
+}
+
+body.light-mode::before {
+  opacity: 0;
+}
+
+body.light-mode::after {
+  opacity: 1;
 }
 
 a {
@@ -67,34 +95,7 @@ a {
   align-items: center;
   justify-content: center;
   padding: 24px;
-  background: #090a0d;
-}
-
-.hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  background: linear-gradient(145deg, #090a0d, #111317, #08090b);
-  transition: opacity 0.45s ease-in-out;
-}
-
-.hero::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  background: linear-gradient(145deg, #eadbca, #d8c4b0, #f0e4d7);
-  opacity: 0;
-  transition: opacity 0.45s ease-in-out;
-}
-
-body.light-mode .hero::before {
-  opacity: 0;
-}
-
-body.light-mode .hero::after {
-  opacity: 1;
+  background: transparent;
 }
 
 /* Background orbs */
