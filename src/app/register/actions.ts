@@ -7,17 +7,52 @@ import { createClient } from '@/lib/supabase/server'
 export async function signup(formData: FormData) {
   const supabase = await createClient()
 
-  const data = {
-    email: formData.get('email') as string,
-    password: formData.get('password') as string,
+  const email = String(formData.get('email') ?? '').trim().toLowerCase()
+  const password = String(formData.get('password') ?? '')
+
+  if (!email || !password) {
+    redirect('/register?error=missing_fields')
   }
 
-  const { error } = await supabase.auth.signUp(data)
+  if (password.length < 8) {
+    redirect('/register?error=password_too_short')
+  }
+
+  if (process.env.NODE_ENV !== 'production') {
+    console.info('AUTH SIGNUP', { email, stage: 'start' })
+  }
+
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      emailRedirectTo: `${process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000'}/auth/callback?next=/account`,
+    },
+  })
 
   if (error) {
-    redirect('/register?error=' + encodeURIComponent(error.message))
+    if (process.env.NODE_ENV !== 'production') {
+      console.error('AUTH SIGNUP', { email, stage: 'error', message: error.message })
+    }
+
+    const code = error.message.toLowerCase().includes('email') ? 'invalid_email' : 'signup_failed'
+    redirect(`/register?error=${code}`)
+  }
+
+  if (process.env.NODE_ENV !== 'production') {
+    console.info('AUTH SIGNUP', {
+      email,
+      stage: 'success',
+      userId: data.user?.id,
+      session: data.session ? 'present' : 'absent',
+    })
   }
 
   revalidatePath('/', 'layout')
-  redirect('/account?message=Check your email to verify your account')
+
+  if (data.session) {
+    redirect('/account')
+  }
+
+  redirect('/login?message=check_email')
 }

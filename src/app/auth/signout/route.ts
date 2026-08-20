@@ -12,5 +12,5 @@ export async function POST() {
   }
 
   revalidatePath('/', 'layout')
-  redirect('/')
+  redirect('/login')
 }

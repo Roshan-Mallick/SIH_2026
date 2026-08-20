@@ -1,8 +1,22 @@
-import { Navbar } from "@/components/Navbar";
 import Link from "next/link";
 import { login } from "./actions";
+import { getAuthErrorMessage, getAuthMessage, getSafeReturnPath } from "@/lib/auth/redirects";
 
-export default function LoginPage() {
+type LoginPageProps = {
+  searchParams?: Promise<{
+    error?: string | string[];
+    message?: string | string[];
+    returnUrl?: string | string[];
+  }>;
+};
+
+export default async function LoginPage({ searchParams }: LoginPageProps) {
+  const params = await searchParams;
+  const errorMessage = getAuthErrorMessage(params?.error);
+  const statusMessage = getAuthMessage(params?.message);
+  const rawReturnUrl = Array.isArray(params?.returnUrl) ? params?.returnUrl[0] : params?.returnUrl;
+  const returnUrl = getSafeReturnPath(rawReturnUrl);
+
   return (
     <main>
       <section className="hero" style={{ minHeight: '100vh', padding: '24px' }}>
@@ -22,6 +36,20 @@ export default function LoginPage() {
             </div>
 
             <form action={login} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <input type="hidden" name="returnUrl" value={returnUrl} />
+
+              {errorMessage && (
+                <div role="alert" style={{ padding: '12px 14px', borderRadius: '8px', border: '1px solid rgba(248, 113, 113, 0.35)', background: 'rgba(248, 113, 113, 0.08)', color: '#fecaca', fontSize: '13px', lineHeight: 1.5 }}>
+                  {errorMessage}
+                </div>
+              )}
+
+              {statusMessage && (
+                <div role="status" style={{ padding: '12px 14px', borderRadius: '8px', border: '1px solid rgba(74, 222, 128, 0.35)', background: 'rgba(74, 222, 128, 0.08)', color: '#bbf7d0', fontSize: '13px', lineHeight: 1.5 }}>
+                  {statusMessage}
+                </div>
+              )}
+
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                 <label htmlFor="email" style={{ fontSize: '12px', fontWeight: 600, color: 'var(--orange)', letterSpacing: '0.1em' }}>EMAIL</label>
                 <input 
@@ -66,7 +94,7 @@ export default function LoginPage() {
             </form>
 
             <div style={{ textAlign: 'center', marginTop: '24px', fontSize: '13px', color: 'var(--muted)' }}>
-              Don't have an account? <Link href="/register" style={{ color: 'var(--orange)' }}>Sign up</Link>
+              Don&apos;t have an account? <Link href="/register" style={{ color: 'var(--orange)' }}>Sign up</Link>
             </div>
           </div>
         </div>

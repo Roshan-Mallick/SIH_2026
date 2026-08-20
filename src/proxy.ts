@@ -15,7 +15,7 @@ export async function proxy(request: NextRequest) {
           return request.cookies.getAll()
         },
         setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) => request.cookies.set(name, value))
+          cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value))
           supabaseResponse = NextResponse.next({
             request,
           })
@@ -36,7 +36,16 @@ export async function proxy(request: NextRequest) {
   if (isProtectedRoute && !user) {
     const redirectUrl = request.nextUrl.clone()
     redirectUrl.pathname = '/login'
-    redirectUrl.searchParams.set('returnUrl', request.nextUrl.pathname)
+    redirectUrl.search = ''
+    redirectUrl.searchParams.set('returnUrl', `${request.nextUrl.pathname}${request.nextUrl.search}`)
+    return NextResponse.redirect(redirectUrl)
+  }
+
+  const isAuthRoute = request.nextUrl.pathname === '/login' || request.nextUrl.pathname === '/register'
+  if (isAuthRoute && user) {
+    const redirectUrl = request.nextUrl.clone()
+    redirectUrl.pathname = '/account'
+    redirectUrl.search = ''
     return NextResponse.redirect(redirectUrl)
   }
 

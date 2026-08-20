@@ -196,3 +196,20 @@ $$ LANGUAGE plpgsql SECURITY DEFINER;
 CREATE TRIGGER on_auth_user_created
   AFTER INSERT ON auth.users
   FOR EACH ROW EXECUTE PROCEDURE public.handle_new_user();
+
+-- Insert default plans
+INSERT INTO public.plans (name, slug, description, price, billing_interval, is_active, stripe_product_id, stripe_price_id, features) 
+VALUES 
+  ('FREE', 'free', 'Basic protection for individual users.', 0, 'mo', true, null, null, '{"basic_agent":true,"basic_filesystem":true,"basic_scanning":true,"advanced_sandbox":false,"advanced_reports":false,"premium_support":false}'::jsonb),
+  ('PLUS', 'plus', 'Advanced protection for individual developers.', 20, 'mo', true, 'prod_placeholder_plus', 'price_placeholder_plus', '{}'::jsonb),
+  ('PREMIUM', 'premium', 'Maximum protection for serious development workflows.', 50, 'mo', true, 'prod_placeholder_premium', 'price_placeholder_premium', '{}'::jsonb)
+ON CONFLICT (slug) DO UPDATE SET
+  name = EXCLUDED.name,
+  description = EXCLUDED.description,
+  price = EXCLUDED.price,
+  billing_interval = EXCLUDED.billing_interval,
+  is_active = EXCLUDED.is_active,
+  features = CASE
+    WHEN public.plans.slug = 'free' THEN EXCLUDED.features
+    ELSE public.plans.features
+  END;

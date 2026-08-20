@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "seed:test-user": "node --env-file-if-exists=.env.local scripts/create-test-user.mjs",
     "lint": "eslint"
   },
   "dependencies": {

@@ -1308,3 +1308,24 @@ blockquote { max-width: 710px; margin: 0; padding-left: 24px; border-left: 2px s
 	main { padding: 0 18px; }
 	.section-rule { padding: 58px 0; }
 }
+
+/* Dashboard Sidebar Mobile Styles */
+@media (max-width: 768px) {
+  .dashboard-layout {
+    flex-direction: column !important;
+  }
+  .mobile-menu-toggle {
+    display: block !important;
+  }
+  .dashboard-sidebar {
+    position: fixed !important;
+    transform: translateX(-100%);
+    width: 280px !important;
+  }
+  .dashboard-sidebar.open {
+    transform: translateX(0);
+  }
+  .dashboard-layout main {
+    padding: 80px 20px 40px !important;
+  }
+}
