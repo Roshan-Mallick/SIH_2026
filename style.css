@@ -9,8 +9,6 @@
   --border: rgba(255, 107, 44, 0.25);
   --surface: #15110f;
   --surface-2: #1b1512;
-  --hero-base: #f5f1ec;
-  --hero-bg: linear-gradient(145deg, #090a0d, #111317, #08090b);
   --glass: rgba(10, 12, 16, 0.72);
   --glass-border: rgba(255, 255, 255, 0.16);
   --nav-text: rgba(245, 240, 232, 0.7);
@@ -22,8 +20,6 @@ body.light-mode {
   --bg: #f2eee8;
   --text: #211b18;
   --muted: rgba(33, 27, 24, 0.62);
-  --hero-base: #f5f1ec;
-  --hero-bg: linear-gradient(145deg, #f5f1ec, #e4ddd4, #f8f5f0);
   --glass: rgba(255, 255, 255, 0.48);
   --glass-border: rgba(35, 28, 24, 0.16);
   --nav-text: rgba(35, 28, 24, 0.68);
@@ -71,20 +67,34 @@ a {
   align-items: center;
   justify-content: center;
   padding: 24px;
-  background: var(--hero-base);
-  transition: background-color 0.45s ease-in-out;
+  background: #090a0d;
 }
 
 .hero::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: var(--hero-bg);
+  z-index: 0;
+  background: linear-gradient(145deg, #090a0d, #111317, #08090b);
+  transition: opacity 0.45s ease-in-out;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(145deg, #f5f1ec, #e4ddd4, #f8f5f0);
+  opacity: 0;
   transition: opacity 0.45s ease-in-out;
 }
 
 body.light-mode .hero::before {
   opacity: 0;
+}
+
+body.light-mode .hero::after {
+  opacity: 1;
 }
 
 /* Background orbs */
