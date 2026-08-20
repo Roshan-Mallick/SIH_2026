@@ -1,7 +1,7 @@
 :root {
   --bg: #0d0b0a;
   --text: #f5f0e8;
-  --muted: rgba(245, 240, 232, 0.62);
+  --muted: rgba(254, 239, 216, 0.755);
   --orange: #ff6b2c;
   --orange-light: #ff8a50;
   --orange-dark: #c04d18;
@@ -10,14 +10,14 @@
   --surface: #15110f;
   --surface-2: #1b1512;
   --glass: rgba(10, 12, 16, 0.72);
-  --glass-border: rgba(255, 255, 255, 0.16);
+  --glass-border: rgba(255, 255, 255, 0.481);
   --nav-text: rgba(245, 240, 232, 0.7);
   --body-copy: rgba(245, 240, 232, 0.62);
   --line: rgba(245, 240, 232, 0.12);
 }
 
 body.light-mode {
-  --bg: #cbb9a7;
+  --bg: #f1e1d0;
   --text: #211b18;
   --muted: rgba(33, 27, 24, 0.62);
   --glass: rgba(74, 55, 43, 0.3);
