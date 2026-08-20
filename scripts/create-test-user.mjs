@@ -1,3 +1,6 @@
+globalThis.WebSocket = class WebSocket { constructor() {} send() {} close() {} };
+import { createClient } from '@supabase/supabase-js'
+
 const FREE_FEATURES = {
   basic_agent: true,
   basic_filesystem: true,
@@ -8,96 +11,6 @@ const FREE_FEATURES = {
 }
 
 const trimEnv = (name) => String(process.env[name] ?? '').trim()
-
-function createSupabaseAdmin(url, serviceRoleKey) {
-  const baseUrl = url.replace(/\/+$/, '')
-  const headers = {
-    apikey: serviceRoleKey,
-    Authorization: `Bearer ${serviceRoleKey}`,
-  }
-
-  async function request(path, options = {}) {
-    const response = await fetch(`${baseUrl}${path}`, {
-      ...options,
-      headers: {
-        ...headers,
-        ...options.headers,
-      },
-    })
-
-    if (!response.ok) {
-      const body = await response.text()
-      throw new Error(`${options.method ?? 'GET'} ${path} failed (${response.status}): ${body}`)
-    }
-
-    if (response.status === 204) {
-      return null
-    }
-
-    return response.json()
-  }
-
-  return {
-    auth: {
-      listUsers: (page, perPage) => request(`/auth/v1/admin/users?page=${page}&per_page=${perPage}`),
-      createUser: (body) => request('/auth/v1/admin/users', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
-      }),
-      updateUser: (id, body) => request(`/auth/v1/admin/users/${id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
-      }),
-    },
-    db: {
-      select: (table, query) => request(`/rest/v1/${table}?${query}`, {
-        headers: { Accept: 'application/json' },
-      }),
-      insert: (table, body) => request(`/rest/v1/${table}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Prefer: 'return=representation',
-        },
-        body: JSON.stringify(body),
-      }),
-      patch: (table, query, body) => request(`/rest/v1/${table}?${query}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          Prefer: 'return=representation',
-        },
-        body: JSON.stringify(body),
-      }),
-    },
-  }
-}
-
-async function verifyPasswordSession(supabaseUrl, anonKey, email, password) {
-  const baseUrl = supabaseUrl.replace(/\/+$/, '')
-  const response = await fetch(`${baseUrl}/auth/v1/token?grant_type=password`, {
-    method: 'POST',
-    headers: {
-      apikey: anonKey,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ email, password }),
-  })
-
-  if (!response.ok) {
-    const body = await response.text()
-    throw new Error(`Password synchronization verification failed (${response.status}): ${body}`)
-  }
-
-  const data = await response.json()
-
-  return {
-    hasSession: Boolean(data.access_token && data.refresh_token),
-    userId: data.user?.id ?? null,
-  }
-}
 
 function fail(message) {
   console.error(`ERROR:\n${message}`)
@@ -128,7 +41,9 @@ async function findUserByEmail(supabase, email) {
   const perPage = 100
 
   while (true) {
-    const data = await supabase.auth.listUsers(page, perPage)
+    const { data, error } = await supabase.auth.admin.listUsers({ page, perPage })
+    if (error) throw error
+
     const users = data?.users ?? []
     const user = users.find((candidate) => candidate.email?.toLowerCase() === email)
 
@@ -144,17 +59,18 @@ async function ensureUser(supabase, email, password) {
   const existingUser = await findUserByEmail(supabase, email)
 
   if (existingUser) {
-    const data = await supabase.auth.updateUser(existingUser.id, {
+    const { data, error } = await supabase.auth.admin.updateUserById(existingUser.id, {
       password,
       email_confirm: true,
       user_metadata: {
         development_test_user: true,
       },
     })
-    return { user: data, created: false }
+    if (error) throw error
+    return { user: data.user, created: false }
   }
 
-  const data = await supabase.auth.createUser({
+  const { data, error } = await supabase.auth.admin.createUser({
     email,
     password,
     email_confirm: true,
@@ -162,14 +78,19 @@ async function ensureUser(supabase, email, password) {
       development_test_user: true,
     },
   })
-  return { user: data, created: true }
+  if (error) throw error
+  return { user: data.user, created: true }
 }
 
 async function ensureProfile(supabase, userId) {
-  const existing = await supabase.db.select('profiles', `select=id&user_id=eq.${encodeURIComponent(userId)}&limit=1`)
+  const { data: existing } = await supabase
+    .from('profiles')
+    .select('id')
+    .eq('user_id', userId)
+    .limit(1)
 
   if (!existing?.length) {
-    await supabase.db.insert('profiles', { user_id: userId })
+    await supabase.from('profiles').insert({ user_id: userId })
   }
 }
 
@@ -187,26 +108,42 @@ async function ensureFreePlan(supabase) {
     features: FREE_FEATURES,
   }
 
-  const existing = await supabase.db.select('plans', 'select=*&slug=eq.free&limit=1')
+  const { data: existing } = await supabase
+    .from('plans')
+    .select('*')
+    .eq('slug', 'free')
+    .limit(1)
 
   if (existing?.length) {
-    const updated = await supabase.db.patch('plans', 'slug=eq.free', body)
-    return updated[0]
+    const { data } = await supabase
+      .from('plans')
+      .update(body)
+      .eq('slug', 'free')
+      .select()
+    return data[0]
   }
 
-  const created = await supabase.db.insert('plans', body)
-  return created[0]
+  const { data } = await supabase
+    .from('plans')
+    .insert(body)
+    .select()
+  return data[0]
 }
 
 async function ensureFreeSubscription(supabase, userId, planId) {
-  const existingRows = await supabase.db.select('subscriptions', `select=*&user_id=eq.${encodeURIComponent(userId)}&order=created_at.asc&limit=1`)
+  const { data: existingRows } = await supabase
+    .from('subscriptions')
+    .select('*')
+    .eq('user_id', userId)
+    .order('created_at', { ascending: true })
+    .limit(1)
+  
   const existing = existingRows?.[0]
 
   if (existing) {
-    const updated = await supabase.db.patch(
-      'subscriptions',
-      `id=eq.${encodeURIComponent(existing.id)}`,
-      {
+    const { data } = await supabase
+      .from('subscriptions')
+      .update({
         plan_id: planId,
         status: 'active',
         current_period_start: null,
@@ -215,19 +152,23 @@ async function ensureFreeSubscription(supabase, userId, planId) {
         canceled_at: null,
         trial_start: null,
         trial_end: null,
-      },
-    )
+      })
+      .eq('id', existing.id)
+      .select()
 
-    return updated[0]
+    return data[0]
   }
 
-  const created = await supabase.db.insert('subscriptions', {
+  const { data } = await supabase
+    .from('subscriptions')
+    .insert({
       user_id: userId,
       plan_id: planId,
       status: 'active',
-  })
+    })
+    .select()
 
-  return created[0]
+  return data[0]
 }
 
 async function ensureEntitlements(supabase, userId, subscriptionId, features) {
@@ -236,7 +177,11 @@ async function ensureEntitlements(supabase, userId, subscriptionId, features) {
     value: String(enabled),
   }))
 
-  const existing = await supabase.db.select('entitlements', `select=id,feature_key&user_id=eq.${encodeURIComponent(userId)}&source=eq.free_plan`)
+  const { data: existing } = await supabase
+    .from('entitlements')
+    .select('id, feature_key')
+    .eq('user_id', userId)
+    .eq('source', 'free_plan')
 
   const existingByKey = new Map((existing ?? []).map((row) => [row.feature_key, row.id]))
 
@@ -244,20 +189,18 @@ async function ensureEntitlements(supabase, userId, subscriptionId, features) {
     const existingId = existingByKey.get(entitlement.feature_key)
 
     if (existingId) {
-      await supabase.db.patch(
-        'entitlements',
-        `id=eq.${encodeURIComponent(existingId)}`,
-        {
+      await supabase
+        .from('entitlements')
+        .update({
           subscription_id: subscriptionId,
           value: entitlement.value,
           expires_at: null,
-        },
-      )
-
+        })
+        .eq('id', existingId)
       continue
     }
 
-    await supabase.db.insert('entitlements', {
+    await supabase.from('entitlements').insert({
       user_id: userId,
       subscription_id: subscriptionId,
       feature_key: entitlement.feature_key,
@@ -269,18 +212,23 @@ async function ensureEntitlements(supabase, userId, subscriptionId, features) {
 }
 
 async function verifySeed(supabase, userId) {
-  const [profiles, subscriptions, entitlements] = await Promise.all([
-    supabase.db.select('profiles', `select=id&user_id=eq.${encodeURIComponent(userId)}&limit=1`),
-    supabase.db.select('subscriptions', `select=status,plans(name,slug)&user_id=eq.${encodeURIComponent(userId)}&order=created_at.asc&limit=1`),
-    supabase.db.select('entitlements', `select=feature_key,value&user_id=eq.${encodeURIComponent(userId)}&source=eq.free_plan`),
+  const [profilesRes, subscriptionsRes, entitlementsRes] = await Promise.all([
+    supabase.from('profiles').select('id').eq('user_id', userId).limit(1),
+    supabase.from('subscriptions').select('status, plans(name, slug)').eq('user_id', userId).order('created_at', { ascending: true }).limit(1),
+    supabase.from('entitlements').select('feature_key, value').eq('user_id', userId).eq('source', 'free_plan'),
   ])
-  const subscription = subscriptions?.[0]
+
+  const subscription = subscriptionsRes.data?.[0]
+  const plans = subscription?.plans
+
+  // If plans is an array (due to how Supabase returns joins sometimes)
+  const planName = Array.isArray(plans) ? plans[0]?.name : plans?.name
 
   return {
-    hasProfile: Boolean(profiles?.[0]),
-    planName: subscription?.plans?.name ?? null,
+    hasProfile: Boolean(profilesRes.data?.[0]),
+    planName: planName ?? null,
     subscriptionStatus: subscription?.status ?? null,
-    entitlementCount: entitlements?.length ?? 0,
+    entitlementCount: entitlementsRes.data?.length ?? 0,
   }
 }
 
@@ -297,25 +245,44 @@ async function main() {
     fail('DEV_TEST_PASSWORD must be at least 8 characters.')
   }
 
-  const supabase = createSupabaseAdmin(supabaseUrl, serviceRoleKey)
+  const supabaseAdmin = createClient(supabaseUrl, serviceRoleKey, {
+    auth: {
+      persistSession: false,
+      autoRefreshToken: false,
+      detectSessionInUrl: false,
+    },
+  })
 
-  const { user, created } = await ensureUser(supabase, email, password)
-  const freePlan = await ensureFreePlan(supabase)
-  await ensureProfile(supabase, user.id)
-  const subscription = await ensureFreeSubscription(supabase, user.id, freePlan.id)
-  await ensureEntitlements(supabase, user.id, subscription.id, freePlan.features ?? FREE_FEATURES)
+  const { user, created } = await ensureUser(supabaseAdmin, email, password)
+  const freePlan = await ensureFreePlan(supabaseAdmin)
+  await ensureProfile(supabaseAdmin, user.id)
+  const subscription = await ensureFreeSubscription(supabaseAdmin, user.id, freePlan.id)
+  await ensureEntitlements(supabaseAdmin, user.id, subscription.id, freePlan.features ?? FREE_FEATURES)
 
-  const verification = await verifySeed(supabase, user.id)
-  const passwordVerification = await verifyPasswordSession(supabaseUrl, anonKey, email, password)
+  const verification = await verifySeed(supabaseAdmin, user.id)
+
+  const supabaseAnon = createClient(supabaseUrl, anonKey, {
+    auth: {
+      persistSession: false,
+      autoRefreshToken: false,
+      detectSessionInUrl: false,
+    },
+  })
+
+  const { data: authData, error: authError } = await supabaseAnon.auth.signInWithPassword({
+    email,
+    password,
+  })
 
   if (!verification.hasProfile || verification.planName !== 'FREE' || verification.subscriptionStatus !== 'active') {
     fail('Test user was created, but profile or Free plan verification failed.')
   }
 
-  if (!passwordVerification.hasSession || passwordVerification.userId !== user.id) {
-    fail('Test user password was updated, but Supabase did not return a matching login session.')
+  if (authError || !authData.session || authData.user.id !== user.id) {
+    fail(`Test user password verification failed. Error: ${authError?.message || 'No session created.'}`)
   }
 
+  console.log('Test authentication: PASS')
   console.log('Aegis development test user')
   console.log(`User ID: ${user.id}`)
   console.log(`Email: ${email}`)
