@@ -3,13 +3,23 @@ import { Navbar } from "@/components/Navbar";
 export default function About() {
   return (
     <>
+      {/* Background orbs — richer composition matching homepage */}
+      <div className="hero-bg" aria-hidden="true" style={{ position: 'fixed', zIndex: 0 }}>
+        <div className="orb orb-1"></div>
+        <div className="orb orb-2"></div>
+        <div className="orb orb-5"></div>
+        <div className="orb orb-6"></div>
+        <div className="orb orb-7"></div>
+      </div>
+
+      {/* Floating edge orbs */}
       <div className="page-orbs" aria-hidden="true">
         <span className="orb orb-large"></span>
         <span className="orb orb-small"></span>
         <span className="orb orb-ring"></span>
       </div>
 
-      <header className="site-shell">
+      <header className="site-shell" style={{ position: 'relative', zIndex: 1 }}>
         <Navbar type="site" />
 
         <main>

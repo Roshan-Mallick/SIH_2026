@@ -45,3 +45,39 @@ export async function login(formData: FormData) {
   revalidatePath('/', 'layout')
   redirect(returnUrl)
 }
+
+export async function signInWithGoogle(formData: FormData) {
+  const supabase = await createClient()
+  const returnUrl = getSafeReturnPath(formData.get('returnUrl'))
+
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      redirectTo: `${process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000'}/auth/callback?next=${encodeURIComponent(returnUrl)}`,
+    },
+  })
+
+  if (error || !data.url) {
+    redirect(`/login?error=oauth_failed&returnUrl=${encodeURIComponent(returnUrl)}`)
+  }
+
+  redirect(data.url)
+}
+
+export async function signInWithGitHub(formData: FormData) {
+  const supabase = await createClient()
+  const returnUrl = getSafeReturnPath(formData.get('returnUrl'))
+
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: 'github',
+    options: {
+      redirectTo: `${process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000'}/auth/callback?next=${encodeURIComponent(returnUrl)}`,
+    },
+  })
+
+  if (error || !data.url) {
+    redirect(`/login?error=oauth_failed&returnUrl=${encodeURIComponent(returnUrl)}`)
+  }
+
+  redirect(data.url)
+}

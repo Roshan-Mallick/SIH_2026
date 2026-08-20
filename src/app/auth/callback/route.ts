@@ -7,6 +7,17 @@ export async function GET(request: NextRequest) {
   const code = requestUrl.searchParams.get('code')
   const next = getSafeReturnPath(requestUrl.searchParams.get('next'))
 
+  // Handle OAuth provider errors (e.g. user cancelled, access denied)
+  const oauthError = requestUrl.searchParams.get('error')
+  if (oauthError) {
+    const errorDesc = requestUrl.searchParams.get('error_description') ?? ''
+    if (process.env.NODE_ENV !== 'production') {
+      console.error('AUTH CALLBACK OAuth error', { oauthError, errorDesc })
+    }
+    const code = oauthError === 'access_denied' ? 'oauth_cancelled' : 'oauth_failed'
+    return NextResponse.redirect(new URL(`/login?error=${code}`, requestUrl.origin))
+  }
+
   if (code) {
     const supabase = await createClient()
     const { error } = await supabase.auth.exchangeCodeForSession(code)

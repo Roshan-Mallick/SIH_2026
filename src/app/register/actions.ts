@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
+import { getSafeReturnPath } from '@/lib/auth/redirects'
 
 export async function signup(formData: FormData) {
   const supabase = await createClient()
@@ -55,4 +56,40 @@ export async function signup(formData: FormData) {
   }
 
   redirect('/login?message=check_email')
+}
+
+export async function signInWithGoogle(formData: FormData) {
+  const supabase = await createClient()
+  const returnUrl = getSafeReturnPath(formData.get('returnUrl') ?? '/account')
+
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      redirectTo: `${process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000'}/auth/callback?next=${encodeURIComponent(returnUrl)}`,
+    },
+  })
+
+  if (error || !data.url) {
+    redirect('/register?error=oauth_failed')
+  }
+
+  redirect(data.url)
+}
+
+export async function signInWithGitHub(formData: FormData) {
+  const supabase = await createClient()
+  const returnUrl = getSafeReturnPath(formData.get('returnUrl') ?? '/account')
+
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: 'github',
+    options: {
+      redirectTo: `${process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000'}/auth/callback?next=${encodeURIComponent(returnUrl)}`,
+    },
+  })
+
+  if (error || !data.url) {
+    redirect('/register?error=oauth_failed')
+  }
+
+  redirect(data.url)
 }

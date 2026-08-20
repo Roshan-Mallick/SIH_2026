@@ -42,6 +42,10 @@ export function getAuthErrorMessage(code: string | string[] | undefined) {
       return 'Unable to log in. Please try again.'
     case 'auth_callback_failed':
       return 'Unable to confirm your email link. Please try logging in.'
+    case 'oauth_cancelled':
+      return 'Sign-in was cancelled. Please try again.'
+    case 'oauth_failed':
+      return 'Unable to sign in with that provider. Please try again or use email and password.'
     default:
       return null
   }
