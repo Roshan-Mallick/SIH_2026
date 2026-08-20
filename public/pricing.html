@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pricing — Aegis AI Code Security</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <main>
+    <section class="hero" style="min-height:100vh;padding:24px;">
+      <div class="hero-bg">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+        <div class="orb orb-4"></div>
+        <div class="orb orb-5"></div>
+        <div class="orb orb-6"></div>
+        <div class="orb orb-7"></div>
+      </div>
+
+      <div class="hero-glass" style="max-width:1200px;">
+        <div class="hero-inner" style="padding:40px 48px 60px;">
+          <nav class="site-nav" aria-label="Main navigation">
+            <a href="index.html" class="site-logo">
+              <img id="theme-logo" src="assets/logo.png" alt="Aegis" />
+            </a>
+            <div class="nav-links">
+              <a href="index.html">HOME</a>
+              <a href="about.html">ABOUT</a>
+              <a class="active" href="pricing.html">PRODUCT</a>
+              <a href="downloads.html">DOWNLOADS</a>
+              <a href="/account">ACCOUNT</a>
+              <button class="theme-toggle" type="button" aria-label="Switch theme" id="themeToggle">
+                <span class="theme-icon" aria-hidden="true">☼</span>
+              </button>
+            </div>
+          </nav>
+
+          <div style="text-align:center;margin-top:60px;margin-bottom:80px;">
+            <p class="pill">PRICING</p>
+            <h1 class="hero-title">Choose your <span>protection.</span></h1>
+            <p class="hero-desc" style="margin:20px auto 0;">Security that scales with your workflow.</p>
+          </div>
+
+          <div class="pricing-cards">
+            <!-- Free -->
+            <article class="card visual-card pricing-card">
+              <div class="scan-lines"></div>
+              <h3>FREE</h3>
+              <p class="plan-desc">For getting started.</p>
+              <div class="plan-price"><span class="price-amount">$0</span><span class="price-period">/mo</span></div>
+              <ul class="plan-features">
+                <li>✓ Single local agent</li>
+                <li>✓ Basic filesystem controls</li>
+                <li>✓ Basic secret/leak scanning</li>
+                <li>✓ Basic security checks</li>
+                <li>✓ Community support</li>
+              </ul>
+              <a href="/register" class="hero-btn hero-btn-secondary" style="width:100%;text-align:center;display:block;">Get Started</a>
+            </article>
+
+            <!-- Plus -->
+            <article class="card intelligence-card pricing-card" style="border-color:var(--orange);">
+              <div class="card-icon" style="top:32px;right:32px;">♧</div>
+              <h3 style="color:var(--orange);">PLUS</h3>
+              <p class="plan-desc">For serious developers.</p>
+              <div class="plan-price"><span class="price-amount">$20</span><span class="price-period">/mo</span></div>
+              <ul class="plan-features">
+                <li>✓ Everything in Free</li>
+                <li>✓ Multi-agent support</li>
+                <li>✓ Advanced security policies</li>
+                <li>✓ Dependency &amp; code scanning</li>
+                <li>✓ Detailed security reports</li>
+                <li>✓ Priority support</li>
+              </ul>
+              <a href="/login?redirect=/pricing" class="hero-btn hero-btn-primary" style="width:100%;text-align:center;display:block;">Choose Plus</a>
+            </article>
+
+            <!-- Premium -->
+            <article class="card code-card pricing-card">
+              <div class="card-icon" style="top:32px;right:32px;">☁</div>
+              <h3>PREMIUM</h3>
+              <p class="plan-desc">For advanced teams/security.</p>
+              <div class="plan-price"><span class="price-amount">$50</span><span class="price-period">/mo</span></div>
+              <ul class="plan-features">
+                <li>✓ Everything in Plus</li>
+                <li>✓ Advanced sandboxing</li>
+                <li>✓ Advanced threat analysis</li>
+                <li>✓ Full audit reports</li>
+                <li>✓ Expanded license activations</li>
+                <li>✓ Premium support</li>
+              </ul>
+              <a href="/login?redirect=/pricing" class="hero-btn hero-btn-secondary" style="width:100%;text-align:center;display:block;">Choose Premium</a>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>
