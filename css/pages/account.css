@@ -1,0 +1,614 @@
+/* ============================================================
+   AEGIS ACCOUNT SETTINGS
+   ============================================================ */
+
+/* -- topbar overrides -- */
+.dash-back-link {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.35);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.dash-back-link:hover {
+  color: #f97316;
+}
+
+/* -- main layout -- */
+.acct-main {
+  position: relative;
+  z-index: 1;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 32px 28px 60px;
+}
+
+/* -- header -- */
+.acct-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32px;
+}
+
+.acct-header-left {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.acct-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 2px solid rgba(249, 115, 22, 0.5);
+  background: rgba(249, 115, 22, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #f97316;
+  flex-shrink: 0;
+}
+
+.acct-title {
+  margin: 0;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(22px, 3vw, 28px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: #f5f0e8;
+}
+
+.acct-email {
+  margin: 3px 0 0;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+/* -- grid -- */
+.acct-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.acct-card-wide {
+  grid-column: 1 / -1;
+}
+
+/* -- card -- */
+.acct-card {
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.02);
+  overflow: hidden;
+}
+
+.acct-card-header {
+  padding: 20px 24px 0;
+}
+
+.acct-card-header h2 {
+  margin: 4px 0 0;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #f5f0e8;
+}
+
+.acct-card-body {
+  padding: 20px 24px 24px;
+}
+
+/* -- eyebrow label -- */
+.acct-eyebrow {
+  font-family: "DM Sans", sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(249, 115, 22, 0.7);
+}
+
+/* ============================================================
+   1. SUBSCRIPTION
+   ============================================================ */
+.acct-plan-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.acct-plan-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.acct-plan-name {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #f5f0e8;
+}
+
+.acct-plan-badge {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 10px;
+}
+
+.acct-plan-badge.active {
+  color: #22c55e;
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+.acct-plan-badge.past_due {
+  color: #f59e0b;
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.acct-plan-badge.canceled {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.acct-plan-renewal {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.acct-plan-actions {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+/* invoices */
+.acct-section-label {
+  display: block;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.3);
+  margin-bottom: 10px;
+}
+
+.acct-invoice-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.acct-invoice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.015);
+  font-size: 12px;
+}
+
+.acct-invoice-date {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.acct-invoice-amount {
+  font-weight: 600;
+  color: #f5f0e8;
+}
+
+.acct-invoice-status {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.acct-invoice-status.paid {
+  color: #22c55e;
+}
+
+.acct-invoice-status.open {
+  color: #f59e0b;
+}
+
+.acct-invoice-status.void {
+  color: rgba(255, 255, 255, 0.25);
+}
+
+.acct-empty {
+  margin: 0;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.25);
+  text-align: center;
+  padding: 20px 0;
+}
+
+/* ============================================================
+   2. LICENSE
+   ============================================================ */
+.acct-license-display {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.acct-license-key {
+  flex: 1;
+  font-family: "DM Sans", monospace;
+  font-size: 14px;
+  font-weight: 600;
+  color: #f97316;
+  letter-spacing: 0.06em;
+  padding: 10px 14px;
+  border: 1px solid rgba(249, 115, 22, 0.2);
+  border-radius: 10px;
+  background: rgba(249, 115, 22, 0.04);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.acct-icon-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.02);
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 14px;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: border-color 0.2s, color 0.2s;
+  flex-shrink: 0;
+}
+
+.acct-icon-btn:hover {
+  border-color: rgba(249, 115, 22, 0.4);
+  color: #f97316;
+}
+
+.acct-license-status {
+  margin-bottom: 14px;
+}
+
+.acct-license-badge {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 10px;
+}
+
+.acct-license-badge.active {
+  color: #22c55e;
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+.acct-license-badge.revoked {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.acct-license-badge.none {
+  color: rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.acct-license-meta {
+  margin-bottom: 16px;
+}
+
+.acct-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.acct-meta-row:last-child {
+  border-bottom: none;
+}
+
+.acct-meta-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.acct-meta-value {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* ============================================================
+   3. SECURITY
+   ============================================================ */
+.acct-auth-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  border: 1px solid rgba(34, 197, 94, 0.15);
+  border-radius: 12px;
+  background: rgba(34, 197, 94, 0.04);
+  margin-bottom: 16px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.acct-auth-badge-icon {
+  font-size: 18px;
+}
+
+/* form */
+.acct-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.acct-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.acct-form-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.acct-form-input {
+  padding: 10px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.02);
+  color: #f5f0e8;
+  font-family: "DM Sans", sans-serif;
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.acct-form-input:focus {
+  border-color: rgba(249, 115, 22, 0.4);
+}
+
+.acct-form-input::placeholder {
+  color: rgba(255, 255, 255, 0.2);
+}
+
+.acct-form-error {
+  font-size: 12px;
+  color: #ef4444;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(239, 68, 68, 0.06);
+  border: 1px solid rgba(239, 68, 68, 0.15);
+}
+
+.acct-form-success {
+  font-size: 12px;
+  color: #22c55e;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(34, 197, 94, 0.06);
+  border: 1px solid rgba(34, 197, 94, 0.15);
+}
+
+/* ============================================================
+   4. DEVICES
+   ============================================================ */
+.acct-device-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.acct-device {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.015);
+}
+
+.acct-device-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.acct-device-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #f5f0e8;
+}
+
+.acct-device-dates {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.acct-device-actions {
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   CONFIRM MODAL
+   ============================================================ */
+.acct-confirm-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.acct-confirm-overlay[aria-hidden="false"] {
+  opacity: 1;
+  visibility: visible;
+}
+
+.acct-confirm-modal {
+  width: 100%;
+  max-width: 400px;
+  padding: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  background: #0b0b0d;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.acct-confirm-modal h3 {
+  margin: 0 0 10px;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 18px;
+  color: #f5f0e8;
+}
+
+.acct-confirm-modal p {
+  margin: 0 0 20px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.6;
+}
+
+.acct-confirm-modal p strong {
+  color: #ef4444;
+}
+
+.acct-confirm-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+/* button shared (from dashboard.css) */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 12px;
+  font-family: "DM Sans", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.button.primary {
+  background: linear-gradient(135deg, #f97316, #ea580c);
+  color: #fff;
+  box-shadow: 0 2px 12px rgba(249, 115, 22, 0.25);
+}
+
+.button.primary:hover:not(:disabled) {
+  box-shadow: 0 4px 20px rgba(249, 115, 22, 0.35);
+  transform: translateY(-1px);
+}
+
+.button.secondary {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.button.secondary:hover:not(:disabled) {
+  border-color: rgba(255, 255, 255, 0.18);
+  color: #fff;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.button.danger {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  color: #ef4444;
+}
+
+.button.danger:hover:not(:disabled) {
+  background: rgba(239, 68, 68, 0.18);
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 768px) {
+  .acct-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .acct-main {
+    padding: 16px 16px 40px;
+  }
+
+  .acct-header-left {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .acct-plan-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .acct-device {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .acct-device-actions {
+    align-self: flex-end;
+  }
+}

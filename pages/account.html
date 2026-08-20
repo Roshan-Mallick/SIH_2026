@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aegis — Account Settings</title>
+  <link rel="stylesheet" href="../css/main.css" />
+  <link rel="stylesheet" href="../css/pages/dashboard.css" />
+  <link rel="stylesheet" href="../css/pages/account.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body class="dash-body">
+  <div class="dash-orbs" aria-hidden="true">
+    <span class="orb orb-glow-1"></span>
+    <span class="orb orb-glow-2"></span>
+  </div>
+
+  <header class="dash-topbar">
+    <div class="dash-topbar-left">
+      <a href="../index.html" class="dash-logo" aria-label="Aegis home">
+        <img id="theme-logo" data-base-path="../" src="../assets/images/logo-dark.png" alt="Aegis" />
+      </a>
+      <span class="dash-topbar-sep"></span>
+      <nav class="dash-nav" aria-label="Dashboard navigation">
+        <a class="dash-nav-link" href="dashboard.html">Dashboard</a>
+        <a class="dash-nav-link" href="dashboard.html#sandbox">Sandbox</a>
+        <a class="dash-nav-link" href="dashboard.html#scans">Scans</a>
+        <a class="dash-nav-link" href="dashboard.html#reports">Reports</a>
+        <a class="dash-nav-link" href="dashboard.html#audit">Audit Log</a>
+        <a class="dash-nav-link active" href="account.html" aria-current="page">Account</a>
+      </nav>
+    </div>
+    <div class="dash-topbar-right">
+      <a href="dashboard.html" class="dash-back-link">&larr; Dashboard</a>
+      <button class="dash-avatar-btn" id="avatar-btn" type="button" aria-label="Account">
+        <span class="dash-avatar-initial" id="topbar-avatar">A</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="acct-main">
+    <div class="acct-header">
+      <div class="acct-header-left">
+        <div class="acct-avatar" id="acct-avatar">A</div>
+        <div>
+          <h1 class="acct-title">Account Settings</h1>
+          <p class="acct-email" id="acct-email"></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="acct-grid">
+
+      <!-- ======================================================
+           1. SUBSCRIPTION & PAYMENT
+           ====================================================== -->
+      <section class="acct-card" id="card-subscription">
+        <div class="acct-card-header">
+          <div>
+            <span class="acct-eyebrow">BILLING</span>
+            <h2>Subscription</h2>
+          </div>
+        </div>
+        <div class="acct-card-body">
+          <div class="acct-plan-row">
+            <div class="acct-plan-info">
+              <span class="acct-plan-name" id="sub-plan">Free</span>
+              <span class="acct-plan-badge" id="sub-status">Active</span>
+            </div>
+            <span class="acct-plan-renewal" id="sub-renewal"></span>
+          </div>
+          <div class="acct-plan-actions">
+            <button class="button primary" id="btn-manage-billing" disabled>Manage Billing</button>
+            <button class="button secondary" id="btn-upgrade" style="display:none;">Upgrade Plan</button>
+          </div>
+          <div class="acct-invoices">
+            <span class="acct-section-label">Payment History</span>
+            <div class="acct-invoice-list" id="invoice-list">
+              <p class="acct-empty">No payment history.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================
+           2. LICENSE VALIDITY
+           ====================================================== -->
+      <section class="acct-card" id="card-license">
+        <div class="acct-card-header">
+          <div>
+            <span class="acct-eyebrow">LICENSE</span>
+            <h2>License Key</h2>
+          </div>
+        </div>
+        <div class="acct-card-body">
+          <div class="acct-license-display">
+            <code class="acct-license-key" id="license-key">---</code>
+            <button class="acct-icon-btn" id="btn-copy-license" title="Copy license key">&#128203;</button>
+            <button class="acct-icon-btn" id="btn-reveal-license" title="Reveal full key">&#128065;</button>
+          </div>
+          <div class="acct-license-status">
+            <span class="acct-license-badge" id="license-status">No License</span>
+          </div>
+          <div class="acct-license-meta">
+            <div class="acct-meta-row">
+              <span class="acct-meta-label">Activated</span>
+              <span class="acct-meta-value" id="license-activated">&mdash;</span>
+            </div>
+            <div class="acct-meta-row">
+              <span class="acct-meta-label">Last Seen</span>
+              <span class="acct-meta-value" id="license-last-seen">&mdash;</span>
+            </div>
+          </div>
+          <button class="button secondary" id="btn-regenerate-license" disabled>Regenerate License Key</button>
+        </div>
+      </section>
+
+      <!-- ======================================================
+           3. SECURITY — AUTHENTICATION
+           ====================================================== -->
+      <section class="acct-card" id="card-security">
+        <div class="acct-card-header">
+          <div>
+            <span class="acct-eyebrow">SECURITY</span>
+            <h2>Authentication</h2>
+          </div>
+        </div>
+        <div class="acct-card-body">
+          <div id="auth-oauth-badge" class="acct-auth-badge" style="display:none;">
+            <span class="acct-auth-badge-icon" id="oauth-badge-icon"></span>
+            <span id="oauth-badge-text"></span>
+          </div>
+          <form id="password-form" class="acct-form" style="display:none;">
+            <div class="acct-form-group">
+              <label class="acct-form-label" for="current-password">Current Password</label>
+              <input class="acct-form-input" type="password" id="current-password" name="current-password" autocomplete="current-password" />
+            </div>
+            <div class="acct-form-group">
+              <label class="acct-form-label" for="new-password">New Password</label>
+              <input class="acct-form-input" type="password" id="new-password" name="new-password" autocomplete="new-password" />
+            </div>
+            <div class="acct-form-group">
+              <label class="acct-form-label" for="confirm-password">Confirm New Password</label>
+              <input class="acct-form-input" type="password" id="confirm-password" name="confirm-password" autocomplete="new-password" />
+            </div>
+            <div class="acct-form-error" id="password-error" style="display:none;"></div>
+            <div class="acct-form-success" id="password-success" style="display:none;"></div>
+            <button class="button primary" type="submit">Update Password</button>
+          </form>
+        </div>
+      </section>
+
+      <!-- ======================================================
+           4. REGISTERED DEVICES
+           ====================================================== -->
+      <section class="acct-card acct-card-wide" id="card-devices">
+        <div class="acct-card-header">
+          <div>
+            <span class="acct-eyebrow">DEVICES</span>
+            <h2>Registered Devices</h2>
+          </div>
+        </div>
+        <div class="acct-card-body">
+          <div class="acct-device-list" id="device-list">
+            <p class="acct-empty">No devices registered. Activate a license from the desktop app to register a device.</p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Regenerate license confirmation -->
+  <div class="acct-confirm-overlay" id="regen-overlay" aria-hidden="true">
+    <div class="acct-confirm-modal" role="dialog" aria-modal="true">
+      <h3>Regenerate License Key?</h3>
+      <p>This will <strong>invalidate your current key</strong> and unbind all devices. You will need to re-activate on every machine.</p>
+      <div class="acct-confirm-actions">
+        <button class="button secondary" id="regen-cancel">Cancel</button>
+        <button class="button danger" id="regen-confirm">Regenerate</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/theme.js"></script>
+  <script src="../js/account.js"></script>
+</body>
+</html>
