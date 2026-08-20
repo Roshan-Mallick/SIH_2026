@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   var SUPABASE_URL = "https://aiexfmkkvqacyxrgjdgl.supabase.co";
-  var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFpZXhmbWtrdnFhY3l4cmdqZGdsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU2MTcwMTksImV4cCI6MjA3MTE5MzAxOX0.PlaceholderReplaceWithRealKey";
+  var SUPABASE_ANON_KEY = "sb_publishable_c1tgCLDnsaa4qVSHLWH_9g_1WIU9Hwp";
   var REDIRECT_URL = "https://aegis-preflight.vercel.app/pages/dashboard.html";
 
   var sb = null;
