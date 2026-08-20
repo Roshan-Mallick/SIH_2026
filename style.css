@@ -84,7 +84,7 @@ a {
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: linear-gradient(145deg, #cbb9a7, #b5a18e, #d5c5b5);
+  background: linear-gradient(145deg, #eadbca, #d8c4b0, #f0e4d7);
   opacity: 0;
   transition: opacity 0.45s ease-in-out;
 }
