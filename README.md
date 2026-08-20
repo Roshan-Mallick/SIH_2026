@@ -656,3 +656,45 @@ License to be decided.
 **Control the agent.  
 Verify the output.  
 Trust the code.**
+
+---
+
+# Backend & Web Platform Development
+
+The Aegis web platform has been migrated to Next.js.
+
+## Prerequisites
+- Node.js 18+
+- Supabase project
+- Stripe account
+
+## Local Setup
+
+1. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+
+2. **Environment Variables:**
+   Copy \`.env.example\` to \`.env.local\` and fill in your Supabase and Stripe keys.
+   ```bash
+   cp .env.example .env.local
+   ```
+
+3. **Database Setup:**
+   Run the SQL statements in \`supabase_schema.sql\` in your Supabase SQL editor to create the necessary tables, RLS policies, and triggers.
+
+4. **Run Development Server:**
+   ```bash
+   npm run dev
+   ```
+
+5. **Stripe Webhooks (Local testing):**
+   ```bash
+   stripe listen --forward-to localhost:3000/api/webhooks/stripe
+   ```
+   Copy the webhook signing secret to \`STRIPE_WEBHOOK_SECRET\` in \`.env.local\`.
+
+## Architecture & Docs
+Please refer to the \`docs/\` folder for detailed architecture, database schema, and security model descriptions.
+
