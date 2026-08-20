@@ -10,10 +10,10 @@
   --surface: #15110f;
   --surface-2: #1b1512;
   --glass: rgba(10, 12, 16, 0.72);
-  --glass-border: rgba(255, 255, 255, 0.481);
+  --glass-border: rgba(255, 255, 255, 0.705);
   --nav-text: rgba(245, 240, 232, 0.7);
   --body-copy: rgba(245, 240, 232, 0.62);
-  --line: rgba(245, 240, 232, 0.12);
+  --line: rgba(245, 240, 232, 0.23);
 }
 
 body.light-mode {
