@@ -4,10 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Aegis — AI Code Security</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="css/main.css" />
 </head>
 
 <body>
@@ -26,24 +23,26 @@
       <div class="hero-glass">
         <div class="hero-inner">
           <nav class="hero-nav">
-            <a href="#" class="hero-logo"><img id="theme-logo" src="assets/logo.png" alt="Aegis" /></a>
+            <a href="#" class="hero-logo">
+              <img id="theme-logo" src="assets/images/logo-dark.png" alt="Aegis" />
+            </a>
             <div class="hero-nav-links">
               <a class="active" href="#">HOME</a>
-              <a class="inactive" href="navbar/about.html">ABOUT</a>
-              <a class="inactive" href="#">PRODUCT</a>
-              <a class="inactive" href="#">SERVICE</a>
-              <a class="inactive" href="#">CONTACT</a>
+              <a class="inactive" href="pages/about.html">ABOUT</a>
+              <a class="inactive" href="pages/product.html">PRODUCT</a>
+              <a class="inactive" href="pages/service.html">SERVICE</a>
+              <a class="inactive" href="#contact">CONTACT</a>
               <button class="theme-toggle" type="button" aria-label="Switch to light mode" aria-pressed="false">
-                <span class="theme-icon" aria-hidden="true">☼</span>
+                <span class="theme-icon" aria-hidden="true">&#9728;</span>
               </button>
             </div>
           </nav>
 
           <div class="hero-content">
-            <p class="hero-eyebrow">AI CODE SECURITY · PREFLIGHT</p>
+            <p class="hero-eyebrow">AI CODE SECURITY &middot; PREFLIGHT</p>
             <h1 class="hero-title">Secure <span>AI Coding.<br />Before </span>It Ships.</h1>
             <p class="hero-desc">
-              Aegis PreFlight puts AI coding agents inside a controlled sandbox — monitoring actions, enforcing security policies, scanning code, and validating fixes before release.
+              Aegis PreFlight puts AI coding agents inside a controlled sandbox &mdash; monitoring actions, enforcing security policies, scanning code, and validating fixes before release.
             </p>
 
             <div class="hero-btns">
@@ -56,17 +55,17 @@
                 <span class="workflow-dot"></span>
                 <span class="workflow-label">AI AGENT</span>
               </div>
-              <span class="workflow-arrow">→</span>
+              <span class="workflow-arrow">&rarr;</span>
               <div class="workflow-step">
                 <span class="workflow-dot"></span>
                 <span class="workflow-label">SANDBOX</span>
               </div>
-              <span class="workflow-arrow">→</span>
+              <span class="workflow-arrow">&rarr;</span>
               <div class="workflow-step">
                 <span class="workflow-dot"></span>
                 <span class="workflow-label">SCAN</span>
               </div>
-              <span class="workflow-arrow">→</span>
+              <span class="workflow-arrow">&rarr;</span>
               <div class="workflow-step workflow-step-accent">
                 <span class="workflow-dot"></span>
                 <span class="workflow-label">VALIDATE</span>
@@ -120,15 +119,15 @@
       <div class="cards">
         <article class="card visual-card">
           <div class="scan-lines"></div>
-          <div class="card-icon">♢</div>
+          <div class="card-icon">&#9673;</div>
           <div class="card-footer">
-            <h3>Cloud Security &<br />Compliance</h3>
+            <h3>Cloud Security &amp;<br />Compliance</h3>
             <a href="#" class="mini-btn">Get Started</a>
           </div>
         </article>
 
         <article class="card intelligence-card">
-          <div class="card-icon">♧</div>
+          <div class="card-icon">&#9827;</div>
 
           <div class="intelligence-content">
             <h3>AI-Driven Risk<br />Intelligence</h3>
@@ -141,7 +140,7 @@
         </article>
 
         <article class="card code-card">
-          <div class="card-icon">☁</div>
+          <div class="card-icon">&#9729;</div>
           <pre><code>const aegis = {
   scan: true,
   patch: "automatic",
@@ -151,7 +150,7 @@
 </code></pre>
 
           <div class="card-footer">
-            <h3>Cloud Security &<br />Compliance</h3>
+            <h3>Cloud Security &amp;<br />Compliance</h3>
             <a href="#" class="mini-btn">Get Started</a>
           </div>
         </article>
@@ -202,6 +201,7 @@
       We Don't Just Defend. We <span>Adapt.</span>
     </footer>
   </main>
-  <script src="script.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/navigation.js"></script>
 </body>
 </html>

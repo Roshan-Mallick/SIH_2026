@@ -1,0 +1,126 @@
+.hero-btns {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 36px;
+}
+
+.hero-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 13px 28px;
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  transition: background 0.3s, color 0.3s, border-color 0.3s;
+  min-width: 170px;
+  height: 48px;
+}
+
+.hero-btn-primary {
+  background: var(--orange);
+  color: #fff;
+  border: 1px solid var(--orange);
+}
+
+.hero-btn-primary:hover {
+  background: var(--orange-light);
+  border-color: var(--orange-light);
+}
+
+.hero-btn-secondary {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--body-copy);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.hero-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.14);
+  color: var(--text);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 27px;
+  border-radius: 28px;
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  transition: background 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.button.primary {
+  background: var(--orange);
+  color: #fff;
+  border: 1px solid var(--orange);
+}
+
+.button.primary:hover {
+  background: var(--orange-light);
+  border-color: var(--orange-light);
+}
+
+.button.secondary {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--body-copy);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.button.secondary:hover {
+  background: rgba(255, 255, 255, 0.14);
+  color: var(--text);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.hero-actions {
+  display: flex;
+  gap: 14px;
+  margin-top: 35px;
+  flex-wrap: wrap;
+}
+
+.mini-btn,
+.outline-mini {
+  display: inline-block;
+  padding: 11px 16px;
+  border-radius: 9px;
+  font-size: 12px;
+  font-weight: 700;
+  background: var(--orange);
+  color: #fff;
+}
+
+.theme-toggle {
+  width: 34px;
+  height: 34px;
+  display: inline-grid;
+  place-items: center;
+  padding: 0;
+  font: inherit;
+  line-height: 1;
+  border: 1px solid var(--glass-border);
+  border-radius: 50%;
+  color: var(--orange);
+  background: rgba(255, 255, 255, 0.06);
+  cursor: pointer;
+  transition: background 0.3s, border-color 0.3s, color 0.3s;
+}
+
+.theme-toggle:hover {
+  background: rgba(255, 107, 44, 0.14);
+  border-color: var(--orange);
+}
+
+.theme-icon {
+  font-size: 18px;
+  line-height: 1;
+}

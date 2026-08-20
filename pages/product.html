@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aegis PreFlight — Product</title>
+  <link rel="stylesheet" href="../css/main.css" />
+</head>
+
+<body>
+  <div class="page-orbs" aria-hidden="true">
+    <span class="orb orb-large"></span>
+    <span class="orb orb-small"></span>
+    <span class="orb orb-ring"></span>
+  </div>
+
+  <div class="page-shell">
+    <header class="site-header">
+      <a class="brand" href="../index.html">
+        <img id="theme-logo" data-base-path="../" src="../assets/images/logo-dark.png" alt="Aegis" style="height:48px;" />
+      </a>
+      <nav class="nav-links">
+        <a href="../index.html">HOME</a>
+        <a href="about.html">ABOUT</a>
+        <a class="active" href="product.html" aria-current="page">PRODUCT</a>
+        <a href="service.html">SERVICE</a>
+        <a href="../index.html#contact">CONTACT</a>
+        <button class="theme-toggle" type="button" aria-label="Switch to light mode" aria-pressed="false">
+          <span class="theme-icon" aria-hidden="true">&#9728;</span>
+        </button>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero compact">
+        <p class="eyebrow">THE PRODUCT &middot; AEGIS PREFLIGHT</p>
+        <h1>AI coding agents.<br /><em>Security-controlled.</em></h1>
+        <p class="lead">Aegis PreFlight puts an AI coding agent inside a controlled environment, observes its work, and validates every change before it ships.</p>
+        <div class="hero-actions">
+          <a class="button primary" href="#workflow">Explore the workflow <span>&nearr;</span></a>
+          <a class="button secondary" href="service.html">See our services</a>
+        </div>
+      </section>
+
+      <section id="workflow" class="section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">ONE CONTROLLED LOOP</p>
+            <h2>Useful to developers.<br /><em>Independent of the agent.</em></h2>
+          </div>
+        </div>
+        <div class="flow-card">
+          <div class="flow-step"><span>01</span><strong>AGENT</strong><small>Assigned coding task</small></div>
+          <b>&rarr;</b>
+          <div class="flow-step"><span>02</span><strong>SANDBOX</strong><small>Restricted workspace</small></div>
+          <b>&rarr;</b>
+          <div class="flow-step"><span>03</span><strong>MONITOR</strong><small>Runtime activity</small></div>
+          <b>&rarr;</b>
+          <div class="flow-step active-step"><span>04</span><strong>VALIDATE</strong><small>Pass or block</small></div>
+        </div>
+      </section>
+
+      <section class="feature-grid section">
+        <article>
+          <span class="feature-number">01</span>
+          <h3>Controlled runtime</h3>
+          <p>Limit project files, tools, processes, and resources to the scope the developer authorizes.</p>
+        </article>
+        <article>
+          <span class="feature-number">02</span>
+          <h3>Policy-aware network</h3>
+          <p>Allow approved destinations while blocking unrelated or suspicious network activity.</p>
+        </article>
+        <article>
+          <span class="feature-number">03</span>
+          <h3>Runtime visibility</h3>
+          <p>Observe file access, tool execution, process activity, network requests, and policy violations.</p>
+        </article>
+        <article>
+          <span class="feature-number">04</span>
+          <h3>PreFlight validation</h3>
+          <p>Scan for secrets, vulnerable dependencies, sensitive files, and dangerous configuration before release.</p>
+        </article>
+      </section>
+
+      <section class="dark-panel section">
+        <p class="eyebrow">WHEN SOMETHING GOES WRONG</p>
+        <h2>Block. Fix.<br /><em>Rescan.</em></h2>
+        <p>A finding is returned as structured feedback. The agent can remediate the issue, then Aegis checks the result again.</p>
+        <div class="status-row">
+          <span class="status danger">&bull; BLOCK</span>
+          <span class="status">&rarr; FIX</span>
+          <span class="status success">&rarr; RESCAN</span>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>&copy; 2026 AEGIS PREFLIGHT</span>
+      <span>SECURE AI CODING &middot; BEFORE IT SHIPS</span>
+    </footer>
+  </div>
+
+  <script src="../js/theme.js"></script>
+  <script src="../js/navigation.js"></script>
+</body>
+</html>

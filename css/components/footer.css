@@ -1,0 +1,9 @@
+.footer {
+  padding: 24px 0 35px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.footer span {
+  color: var(--orange);
+}
