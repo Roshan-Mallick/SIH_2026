@@ -1,5 +1,5 @@
 (function () {
-  var REDIRECT_URL = "https://aegis-preflight.vercel.app";
+  var REDIRECT_URL = window.location.origin + "/pages/dashboard.html";
 
   function getSupabase() {
     if (window.__aegis && window.__aegis.supabase) return window.__aegis.supabase;
@@ -174,10 +174,7 @@
 
   /* ---- Auth State Handler ---- */
   function onAuthSuccess() {
-    var overlays = document.querySelectorAll('.login-overlay[aria-hidden="false"]');
-    overlays.forEach(function (o) { o.setAttribute("aria-hidden", "true"); });
-    document.body.style.overflow = "";
-    updateNavForAuth(true);
+    window.location.href = REDIRECT_URL;
   }
 
   function updateNavForAuth(isLoggedIn) {

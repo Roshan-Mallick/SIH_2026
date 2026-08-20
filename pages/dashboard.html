@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aegis — Dashboard</title>
+  <link rel="stylesheet" href="../css/main.css" />
+  <link rel="stylesheet" href="../css/pages/dashboard.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+  <div class="page-orbs" aria-hidden="true">
+    <span class="orb orb-large"></span>
+    <span class="orb orb-small"></span>
+    <span class="orb orb-ring"></span>
+  </div>
+
+  <div class="page-shell">
+    <header class="site-header">
+      <a class="brand" href="../index.html">
+        <img id="theme-logo" data-base-path="../" src="../assets/images/logo-dark.png" alt="Aegis" />
+      </a>
+      <nav class="nav-links">
+        <a href="../index.html">HOME</a>
+        <a href="about.html">ABOUT</a>
+        <a href="product.html">PRODUCT</a>
+        <a href="service.html">SERVICE</a>
+        <a class="active" href="dashboard.html" aria-current="page">DASHBOARD</a>
+        <button class="theme-toggle" type="button" aria-label="Switch to light mode" aria-pressed="false">
+          <span class="theme-icon" aria-hidden="true">&#9728;</span>
+        </button>
+      </nav>
+    </header>
+
+    <main>
+      <section class="dash-greeting">
+        <div class="dash-user-info">
+          <div class="dash-avatar" id="dash-avatar">A</div>
+          <div>
+            <h1 id="dash-name">Welcome back</h1>
+            <p class="dash-email" id="dash-email"></p>
+          </div>
+        </div>
+        <div class="dash-actions-top">
+          <button class="button primary" id="btn-new-project">+ New Project</button>
+          <button class="button secondary" id="btn-account">Account</button>
+          <button class="button secondary" id="btn-logout">Log Out</button>
+        </div>
+      </section>
+
+      <section class="dash-stats">
+        <div class="dash-stat-card">
+          <span class="dash-stat-number" id="stat-projects">0</span>
+          <span class="dash-stat-label">Projects</span>
+        </div>
+        <div class="dash-stat-card">
+          <span class="dash-stat-number" id="stat-scans">0</span>
+          <span class="dash-stat-label">Scans Run</span>
+        </div>
+        <div class="dash-stat-card">
+          <span class="dash-stat-number" id="stat-issues">0</span>
+          <span class="dash-stat-label">Issues Found</span>
+        </div>
+        <div class="dash-stat-card">
+          <span class="dash-stat-number dash-stat-ok" id="stat-clean">0</span>
+          <span class="dash-stat-label">Clean Scans</span>
+        </div>
+      </section>
+
+      <section class="dash-grid">
+        <div class="dash-panel dash-projects">
+          <div class="dash-panel-header">
+            <h2>Projects</h2>
+            <button class="dash-link-btn" id="btn-new-project-2">+ Add</button>
+          </div>
+          <div class="dash-list" id="projects-list">
+            <p class="dash-empty">No projects yet. Create your first project to get started.</p>
+          </div>
+        </div>
+
+        <div class="dash-panel dash-recent">
+          <div class="dash-panel-header">
+            <h2>Recent Scans</h2>
+          </div>
+          <div class="dash-list" id="scans-list">
+            <p class="dash-empty">No scans yet. Run a scan on a project to see results here.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="dash-panel dash-quick">
+        <div class="dash-panel-header">
+          <h2>Quick Actions</h2>
+        </div>
+        <div class="dash-quick-grid">
+          <button class="dash-quick-card" id="qa-scan">
+            <span class="dash-quick-icon">&#9881;</span>
+            <span class="dash-quick-title">Run Scan</span>
+            <span class="dash-quick-desc">Analyze a project for security issues</span>
+          </button>
+          <button class="dash-quick-card" id="qa-github">
+            <span class="dash-quick-icon">&#9733;</span>
+            <span class="dash-quick-title">Import from GitHub</span>
+            <span class="dash-quick-desc">Connect a GitHub repository</span>
+          </button>
+          <button class="dash-quick-card" id="qa-upload">
+            <span class="dash-quick-icon">&#8682;</span>
+            <span class="dash-quick-title">Upload Code</span>
+            <span class="dash-quick-desc">Upload files for analysis</span>
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>&copy; 2026 AEGIS PREFLIGHT</span>
+      <span>SECURE AI CODING &middot; BEFORE IT SHIPS</span>
+    </footer>
+  </div>
+
+  <div class="account-overlay" id="account-overlay" aria-hidden="true">
+    <div class="account-modal" role="dialog" aria-labelledby="account-title" aria-modal="true">
+      <button class="account-close" type="button" aria-label="Close account" id="close-account">&times;</button>
+      <div class="account-header">
+        <div class="account-avatar" id="account-avatar">A</div>
+        <h2 id="account-title">Account</h2>
+      </div>
+      <div class="account-body">
+        <div class="account-row">
+          <span class="account-label">Name</span>
+          <span class="account-value" id="acct-name">—</span>
+        </div>
+        <div class="account-row">
+          <span class="account-label">Email</span>
+          <span class="account-value" id="acct-email">—</span>
+        </div>
+        <div class="account-row">
+          <span class="account-label">Provider</span>
+          <span class="account-value" id="acct-provider">—</span>
+        </div>
+        <div class="account-row">
+          <span class="account-label">Joined</span>
+          <span class="account-value" id="acct-joined">—</span>
+        </div>
+        <div class="account-row">
+          <span class="account-label">User ID</span>
+          <span class="account-value account-id" id="acct-id">—</span>
+        </div>
+      </div>
+      <div class="account-footer">
+        <button class="button secondary" id="account-close-btn">Close</button>
+        <button class="button primary" id="account-logout">Log Out</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/theme.js"></script>
+  <script src="../js/dashboard.js"></script>
+</body>
+</html>
