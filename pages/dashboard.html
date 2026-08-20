@@ -9,148 +9,183 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 
-<body>
-  <div class="page-orbs" aria-hidden="true">
-    <span class="orb orb-large"></span>
-    <span class="orb orb-small"></span>
-    <span class="orb orb-ring"></span>
+<body class="dash-body">
+  <div class="dash-orbs" aria-hidden="true">
+    <span class="orb orb-glow-1"></span>
+    <span class="orb orb-glow-2"></span>
   </div>
 
-  <div class="page-shell">
-    <header class="site-header">
-      <a class="brand" href="../index.html">
+  <header class="dash-topbar">
+    <div class="dash-topbar-left">
+      <a href="../index.html" class="dash-logo" aria-label="Aegis home">
         <img id="theme-logo" data-base-path="../" src="../assets/images/logo-dark.png" alt="Aegis" />
       </a>
-      <nav class="nav-links">
-        <a href="../index.html">HOME</a>
-        <a href="about.html">ABOUT</a>
-        <a href="product.html">PRODUCT</a>
-        <a href="service.html">SERVICE</a>
-        <a class="active" href="dashboard.html" aria-current="page">DASHBOARD</a>
-        <button class="theme-toggle" type="button" aria-label="Switch to light mode" aria-pressed="false">
-          <span class="theme-icon" aria-hidden="true">&#9728;</span>
-        </button>
+      <span class="dash-topbar-sep"></span>
+      <nav class="dash-nav" aria-label="Dashboard navigation">
+        <a class="dash-nav-link active" href="#dashboard" aria-current="page">Dashboard</a>
+        <a class="dash-nav-link" href="#sandbox">Sandbox</a>
+        <a class="dash-nav-link" href="#scans">Scans</a>
+        <a class="dash-nav-link" href="#reports">Reports</a>
+        <a class="dash-nav-link" href="#audit">Audit Log</a>
       </nav>
-    </header>
+    </div>
+    <div class="dash-topbar-right">
+      <div class="dash-status-pill" id="sandbox-status">
+        <span class="dash-status-dot"></span>
+        <span class="dash-status-text">Sandbox Active</span>
+      </div>
+      <button class="dash-avatar-btn" id="avatar-btn" type="button" aria-label="Account">
+        <span class="dash-avatar-initial" id="topbar-avatar">A</span>
+      </button>
+    </div>
+  </header>
 
-    <main>
-      <section class="dash-greeting">
-        <div class="dash-user-info">
-          <div class="dash-avatar" id="dash-avatar">A</div>
-          <div>
-            <h1 id="dash-name">Welcome back</h1>
-            <p class="dash-email" id="dash-email"></p>
+  <main class="dash-main">
+    <div class="dash-onboard" id="dash-onboard">
+      <div class="dash-onboard-inner">
+        <p class="dash-eyebrow">AI CODE SECURITY &middot; PREFLIGHT</p>
+        <h1 class="dash-onboard-title">Welcome back, <span id="onboard-name">User</span></h1>
+        <p class="dash-onboard-sub">0 scans run. Launch your first sandbox to get started.</p>
+        <div class="dash-onboard-cta">
+          <button class="button primary" id="btn-launch-sandbox">Select Project &amp; Launch Sandbox</button>
+        </div>
+        <div class="dash-onboard-steps">
+          <div class="dash-onboard-step">
+            <span class="dash-onboard-step-num">1</span>
+            <span>Connect GitHub repo or upload files</span>
+          </div>
+          <div class="dash-onboard-step">
+            <span class="dash-onboard-step-num">2</span>
+            <span>AI agent generates security verdict</span>
+          </div>
+          <div class="dash-onboard-step">
+            <span class="dash-onboard-step-num">3</span>
+            <span>Review findings &amp; remediation</span>
           </div>
         </div>
-        <div class="dash-actions-top">
-          <button class="button primary" id="btn-new-project">+ New Project</button>
-          <button class="button secondary" id="btn-account">Account</button>
-          <button class="button secondary" id="btn-logout">Log Out</button>
-        </div>
-      </section>
+      </div>
+    </div>
 
-      <section class="dash-stats">
-        <div class="dash-stat-card">
-          <span class="dash-stat-number" id="stat-projects">0</span>
-          <span class="dash-stat-label">Projects</span>
+    <div class="dash-session" id="dash-session" style="display:none;">
+      <div class="dash-pipeline">
+        <div class="dash-pipeline-stage completed" data-stage="agent">
+          <span class="dash-pipeline-icon">&#10003;</span>
+          <span class="dash-pipeline-label">AI AGENT</span>
         </div>
-        <div class="dash-stat-card">
-          <span class="dash-stat-number" id="stat-scans">0</span>
-          <span class="dash-stat-label">Scans Run</span>
+        <div class="dash-pipeline-connector completed"></div>
+        <div class="dash-pipeline-stage active" data-stage="sandbox">
+          <span class="dash-pipeline-icon">&#9679;</span>
+          <span class="dash-pipeline-label">SANDBOX</span>
         </div>
-        <div class="dash-stat-card">
-          <span class="dash-stat-number" id="stat-issues">0</span>
-          <span class="dash-stat-label">Issues Found</span>
+        <div class="dash-pipeline-connector"></div>
+        <div class="dash-pipeline-stage" data-stage="scan">
+          <span class="dash-pipeline-icon">&#9679;</span>
+          <span class="dash-pipeline-label">SCAN</span>
         </div>
-        <div class="dash-stat-card">
-          <span class="dash-stat-number dash-stat-ok" id="stat-clean">0</span>
-          <span class="dash-stat-label">Clean Scans</span>
+        <div class="dash-pipeline-connector"></div>
+        <div class="dash-pipeline-stage" data-stage="validate">
+          <span class="dash-pipeline-icon">&#9679;</span>
+          <span class="dash-pipeline-label">VALIDATE</span>
         </div>
-      </section>
+      </div>
 
-      <section class="dash-grid">
-        <div class="dash-panel dash-projects">
+      <div class="dash-stats">
+        <div class="dash-stat-card">
+          <span class="dash-stat-label">VERDICT</span>
+          <span class="dash-stat-value" id="stat-verdict">—</span>
+        </div>
+        <div class="dash-stat-card">
+          <span class="dash-stat-label">LOOP ITERATION</span>
+          <span class="dash-stat-value" id="stat-loop">0</span>
+        </div>
+        <div class="dash-stat-card">
+          <span class="dash-stat-label">FINDINGS</span>
+          <span class="dash-stat-value" id="stat-findings">0</span>
+        </div>
+        <div class="dash-stat-card">
+          <span class="dash-stat-label">AUDIT CHAIN</span>
+          <span class="dash-stat-value dash-stat-ok" id="stat-audit">VERIFIED</span>
+        </div>
+      </div>
+
+      <div class="dash-content-grid">
+        <section class="dash-panel dash-findings">
           <div class="dash-panel-header">
-            <h2>Projects</h2>
-            <button class="dash-link-btn" id="btn-new-project-2">+ Add</button>
+            <h2>Findings</h2>
+            <span class="dash-panel-count" id="findings-count">0 issues</span>
           </div>
-          <div class="dash-list" id="projects-list">
-            <p class="dash-empty">No projects yet. Create your first project to get started.</p>
+          <div class="dash-findings-list" id="findings-list">
+            <div class="dash-empty">
+              <p>No findings yet. Run a scan to detect issues.</p>
+            </div>
           </div>
-        </div>
+        </section>
 
-        <div class="dash-panel dash-recent">
+        <section class="dash-panel dash-auditlog">
           <div class="dash-panel-header">
-            <h2>Recent Scans</h2>
+            <h2>Audit Log</h2>
+            <span class="dash-panel-tag">HASH-CHAINED</span>
           </div>
-          <div class="dash-list" id="scans-list">
-            <p class="dash-empty">No scans yet. Run a scan on a project to see results here.</p>
+          <div class="dash-timeline" id="audit-list">
+            <div class="dash-empty">
+              <p>No audit events. Events appear once a scan session starts.</p>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
+    </div>
+  </main>
 
-      <section class="dash-panel dash-quick">
-        <div class="dash-panel-header">
-          <h2>Quick Actions</h2>
-        </div>
-        <div class="dash-quick-grid">
-          <button class="dash-quick-card" id="qa-scan">
-            <span class="dash-quick-icon">&#9881;</span>
-            <span class="dash-quick-title">Run Scan</span>
-            <span class="dash-quick-desc">Analyze a project for security issues</span>
-          </button>
-          <button class="dash-quick-card" id="qa-github">
-            <span class="dash-quick-icon">&#9733;</span>
-            <span class="dash-quick-title">Import from GitHub</span>
-            <span class="dash-quick-desc">Connect a GitHub repository</span>
-          </button>
-          <button class="dash-quick-card" id="qa-upload">
-            <span class="dash-quick-icon">&#8682;</span>
-            <span class="dash-quick-title">Upload Code</span>
-            <span class="dash-quick-desc">Upload files for analysis</span>
-          </button>
-        </div>
-      </section>
-    </main>
-
-    <footer>
-      <span>&copy; 2026 AEGIS PREFLIGHT</span>
-      <span>SECURE AI CODING &middot; BEFORE IT SHIPS</span>
-    </footer>
-  </div>
-
-  <div class="account-overlay" id="account-overlay" aria-hidden="true">
-    <div class="account-modal" role="dialog" aria-labelledby="account-title" aria-modal="true">
-      <button class="account-close" type="button" aria-label="Close account" id="close-account">&times;</button>
-      <div class="account-header">
-        <div class="account-avatar" id="account-avatar">A</div>
+  <div class="dash-account-overlay" id="account-overlay" aria-hidden="true">
+    <div class="dash-account-modal" role="dialog" aria-labelledby="account-title" aria-modal="true">
+      <button class="dash-account-close" type="button" aria-label="Close account" id="close-account">&times;</button>
+      <div class="dash-account-header">
+        <div class="dash-account-avatar" id="account-avatar">A</div>
         <h2 id="account-title">Account</h2>
+        <p class="dash-account-email" id="acct-email"></p>
       </div>
-      <div class="account-body">
-        <div class="account-row">
-          <span class="account-label">Name</span>
-          <span class="account-value" id="acct-name">—</span>
+      <div class="dash-account-body">
+        <div class="dash-account-section">
+          <span class="dash-account-section-title">Profile</span>
+          <div class="dash-account-row">
+            <span class="dash-account-label">Name</span>
+            <span class="dash-account-value" id="acct-name">&mdash;</span>
+          </div>
+          <div class="dash-account-row">
+            <span class="dash-account-label">Provider</span>
+            <span class="dash-account-value" id="acct-provider">&mdash;</span>
+          </div>
+          <div class="dash-account-row">
+            <span class="dash-account-label">Joined</span>
+            <span class="dash-account-value" id="acct-joined">&mdash;</span>
+          </div>
         </div>
-        <div class="account-row">
-          <span class="account-label">Email</span>
-          <span class="account-value" id="acct-email">—</span>
+        <div class="dash-account-section">
+          <span class="dash-account-section-title">Plan</span>
+          <div class="dash-account-row">
+            <span class="dash-account-label">Current Plan</span>
+            <span class="dash-account-value dash-account-plan" id="acct-plan">Free</span>
+          </div>
+          <div class="dash-account-row">
+            <span class="dash-account-label">License Key</span>
+            <span class="dash-account-value" id="acct-license">No key</span>
+          </div>
         </div>
-        <div class="account-row">
-          <span class="account-label">Provider</span>
-          <span class="account-value" id="acct-provider">—</span>
-        </div>
-        <div class="account-row">
-          <span class="account-label">Joined</span>
-          <span class="account-value" id="acct-joined">—</span>
-        </div>
-        <div class="account-row">
-          <span class="account-label">User ID</span>
-          <span class="account-value account-id" id="acct-id">—</span>
+        <div class="dash-account-section">
+          <span class="dash-account-section-title">Connected Accounts</span>
+          <div class="dash-account-row">
+            <span class="dash-account-label">GitHub</span>
+            <span class="dash-account-value" id="acct-github">Not connected</span>
+          </div>
+          <div class="dash-account-row">
+            <span class="dash-account-label">Google</span>
+            <span class="dash-account-value" id="acct-google">Not connected</span>
+          </div>
         </div>
       </div>
-      <div class="account-footer">
+      <div class="dash-account-footer">
         <button class="button secondary" id="account-close-btn">Close</button>
-        <button class="button primary" id="account-logout">Log Out</button>
+        <button class="button danger" id="account-logout">Sign Out</button>
       </div>
     </div>
   </div>

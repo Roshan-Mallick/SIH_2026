@@ -8,12 +8,14 @@
   }
 
   var HOME_URL = "https://aegis-preflight.vercel.app/index.html";
+  var currentUser = null;
 
-  function redirectIfNoAuth() {
-    if (!sb) { window.location.href = HOME_URL; return; }
-    sb.auth.getSession().then(function (res) {
-      if (!res.data.session) window.location.href = HOME_URL;
-    });
+  /* ---- Helpers ---- */
+  function esc(str) {
+    if (!str) return "";
+    var d = document.createElement("div");
+    d.textContent = str;
+    return d.innerHTML;
   }
 
   function getInitial(name) {
@@ -22,137 +24,241 @@
   }
 
   function formatDate(iso) {
-    if (!iso) return "—";
+    if (!iso) return "\u2014";
     return new Date(iso).toLocaleDateString("en-US", {
       year: "numeric", month: "short", day: "numeric",
     });
   }
 
+  function formatTime(iso) {
+    if (!iso) return "";
+    return new Date(iso).toLocaleTimeString("en-US", {
+      hour: "2-digit", minute: "2-digit", second: "2-digit",
+    });
+  }
+
+  function hashChain(str) {
+    var hash = 0;
+    for (var i = 0; i < (str || "").length; i++) {
+      hash = ((hash << 5) - hash + str.charCodeAt(i)) | 0;
+    }
+    var hex = Math.abs(hash).toString(16).padStart(8, "0");
+    return hex + hex.split("").reverse().join("") + hex.slice(0, 8);
+  }
+
+  /* ---- Auth gate ---- */
+  function redirectIfNoAuth() {
+    if (!sb) { window.location.href = HOME_URL; return; }
+    sb.auth.getSession().then(function (res) {
+      if (!res.data.session) window.location.href = HOME_URL;
+    });
+  }
+
+  /* ---- Profile ---- */
   function loadProfile(user) {
+    currentUser = user;
     var meta = user.user_metadata || {};
     var name = meta.full_name || meta.name || user.email || "User";
-    var email = user.email || "—";
+    var firstName = name.split(" ")[0];
+    var email = user.email || "\u2014";
     var avatar = meta.avatar_url || "";
-    var provider = user.app_metadata?.provider || "email";
+    var provider = (user.app_metadata && user.app_metadata.provider) || "email";
     var joined = user.created_at;
 
-    var dashName = document.getElementById("dash-name");
-    var dashEmail = document.getElementById("dash-email");
-    var dashAvatar = document.getElementById("dash-avatar");
-
-    if (dashName) dashName.textContent = "Welcome back, " + name.split(" ")[0];
-    if (dashEmail) dashEmail.textContent = email;
-    if (dashAvatar) {
-      if (avatar) {
-        dashAvatar.innerHTML = '<img src="' + avatar + '" alt="" style="width:100%;height:100%;border-radius:50%;object-fit:cover;" />';
-      } else {
-        dashAvatar.textContent = getInitial(name);
-      }
-    }
-
+    var onboardName = document.getElementById("onboard-name");
+    var topbarAvatar = document.getElementById("topbar-avatar");
     var acctName = document.getElementById("acct-name");
     var acctEmail = document.getElementById("acct-email");
     var acctProvider = document.getElementById("acct-provider");
     var acctJoined = document.getElementById("acct-joined");
-    var acctId = document.getElementById("acct-id");
     var acctAvatar = document.getElementById("account-avatar");
 
+    if (onboardName) onboardName.textContent = firstName;
+
+    var avatarHTML = avatar
+      ? '<img src="' + esc(avatar) + '" alt="" style="width:100%;height:100%;border-radius:50%;object-fit:cover;" />'
+      : getInitial(name);
+
+    if (topbarAvatar) topbarAvatar.innerHTML = avatarHTML;
+    if (acctAvatar) acctAvatar.innerHTML = avatarHTML;
     if (acctName) acctName.textContent = name;
     if (acctEmail) acctEmail.textContent = email;
     if (acctProvider) acctProvider.textContent = provider.charAt(0).toUpperCase() + provider.slice(1);
     if (acctJoined) acctJoined.textContent = formatDate(joined);
-    if (acctId) acctId.textContent = user.id;
-    if (acctAvatar) {
-      if (avatar) {
-        acctAvatar.innerHTML = '<img src="' + avatar + '" alt="" style="width:100%;height:100%;border-radius:50%;object-fit:cover;" />';
-      } else {
-        acctAvatar.textContent = getInitial(name);
-      }
+
+    var githubEl = document.getElementById("acct-github");
+    var googleEl = document.getElementById("acct-google");
+    if (githubEl) githubEl.textContent = provider === "github" ? "Connected" : "Not connected";
+    if (googleEl) googleEl.textContent = provider === "google" ? "Connected" : "Not connected";
+  }
+
+  /* ---- Sessions / scans ---- */
+  var activeSession = null;
+
+  function loadSessions(userId) {
+    if (!sb) return;
+    sb.from("scans").select("id, status, scan_type, findings, summary, created_at")
+      .eq("user_id", userId)
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .then(function (res) {
+        if (res.error || !res.data || res.data.length === 0) {
+          showOnboard();
+          return;
+        }
+        activeSession = res.data[0];
+        showSession();
+        loadFindings(userId);
+        loadAuditLog(userId);
+      });
+  }
+
+  function showOnboard() {
+    var onboard = document.getElementById("dash-onboard");
+    var session = document.getElementById("dash-session");
+    if (onboard) onboard.style.display = "flex";
+    if (session) session.style.display = "none";
+  }
+
+  function showSession() {
+    var onboard = document.getElementById("dash-onboard");
+    var session = document.getElementById("dash-session");
+    if (onboard) onboard.style.display = "none";
+    if (session) session.style.display = "block";
+    updateStats();
+    updatePipeline();
+  }
+
+  function updateStats() {
+    if (!activeSession) return;
+    var summary = activeSession.summary || {};
+    var verdictEl = document.getElementById("stat-verdict");
+    var loopEl = document.getElementById("stat-loop");
+    var findingsEl = document.getElementById("stat-findings");
+    var auditEl = document.getElementById("stat-audit");
+
+    if (verdictEl) {
+      var v = summary.verdict || "PASS";
+      verdictEl.textContent = v;
+      verdictEl.className = "dash-stat-value";
+      if (v === "BLOCK") verdictEl.classList.add("dash-stat-danger");
+      else if (v === "WARNING") verdictEl.classList.add("dash-stat-warn");
+      else verdictEl.classList.add("dash-stat-ok");
     }
+    if (loopEl) loopEl.textContent = summary.loop_iteration || "1";
+    if (findingsEl) findingsEl.textContent = summary.total_issues || "0";
+    if (auditEl) auditEl.textContent = summary.audit_verified ? "VERIFIED" : "PENDING";
   }
 
-  function loadProjects(userId) {
-    if (!sb) return;
-    sb.from("projects").select("id, name, status, created_at")
-      .eq("user_id", userId)
-      .order("created_at", { ascending: false })
-      .limit(10)
-      .then(function (res) {
-        var el = document.getElementById("projects-list");
-        var statEl = document.getElementById("stat-projects");
-        if (res.error || !res.data || res.data.length === 0) {
-          if (el) el.innerHTML = '<p class="dash-empty">No projects yet. Create your first project to get started.</p>';
-          if (statEl) statEl.textContent = "0";
-          return;
-        }
-        if (statEl) statEl.textContent = res.data.length;
-        if (el) {
-          el.innerHTML = res.data.map(function (p) {
-            return '<div class="dash-item">' +
-              '<div><div class="dash-item-name">' + esc(p.name) + '</div>' +
-              '<div class="dash-item-meta">Created ' + formatDate(p.created_at) + '</div></div>' +
-              '<span class="dash-item-status ' + esc(p.status) + '">' + esc(p.status) + '</span>' +
-              '</div>';
-          }).join("");
-        }
-      });
+  function updatePipeline() {
+    var stage = (activeSession && activeSession.summary && activeSession.summary.pipeline_stage) || "sandbox";
+    var stages = ["agent", "sandbox", "scan", "validate"];
+    var idx = stages.indexOf(stage);
+    if (idx < 0) idx = 1;
+
+    document.querySelectorAll(".dash-pipeline-stage").forEach(function (el, i) {
+      el.classList.remove("active", "completed");
+      if (i < idx) el.classList.add("completed");
+      else if (i === idx) el.classList.add("active");
+    });
+
+    document.querySelectorAll(".dash-pipeline-connector").forEach(function (el, i) {
+      el.classList.remove("completed");
+      if (i < idx) el.classList.add("completed");
+    });
   }
 
-  function loadScans(userId) {
-    if (!sb) return;
-    sb.from("scans").select("id, status, scan_type, summary, created_at")
-      .eq("user_id", userId)
+  /* ---- Findings ---- */
+  function loadFindings(userId) {
+    if (!sb || !activeSession) return;
+    sb.from("scan_results")
+      .select("id, severity, title, file_path, line_number, description, remediation, llm_explanation, created_at")
+      .eq("scan_id", activeSession.id)
       .order("created_at", { ascending: false })
-      .limit(10)
       .then(function (res) {
-        var el = document.getElementById("scans-list");
-        var statScans = document.getElementById("stat-scans");
-        var statIssues = document.getElementById("stat-issues");
-        var statClean = document.getElementById("stat-clean");
-
+        var el = document.getElementById("findings-list");
+        var countEl = document.getElementById("findings-count");
         if (res.error || !res.data || res.data.length === 0) {
-          if (el) el.innerHTML = '<p class="dash-empty">No scans yet. Run a scan on a project to see results here.</p>';
-          if (statScans) statScans.textContent = "0";
-          if (statIssues) statIssues.textContent = "0";
-          if (statClean) statClean.textContent = "0";
+          if (el) el.innerHTML = '<div class="dash-empty"><p>No findings detected. Your code looks clean.</p></div>';
+          if (countEl) countEl.textContent = "0 issues";
           return;
         }
-
-        var totalIssues = 0;
-        var cleanScans = 0;
-
-        res.data.forEach(function (s) {
-          if (s.summary && s.summary.total_issues) totalIssues += s.summary.total_issues;
-          if (s.status === "completed" && (!s.summary || !s.summary.total_issues || s.summary.total_issues === 0)) {
-            cleanScans++;
-          }
-        });
-
-        if (statScans) statScans.textContent = res.data.length;
-        if (statIssues) statIssues.textContent = totalIssues;
-        if (statClean) statClean.textContent = cleanScans;
+        var findings = res.data;
+        if (countEl) countEl.textContent = findings.length + " issue" + (findings.length !== 1 ? "s" : "");
 
         if (el) {
-          el.innerHTML = res.data.map(function (s) {
-            var issueText = "";
-            if (s.summary && s.summary.total_issues !== undefined) {
-              issueText = s.summary.total_issues + " issues";
+          el.innerHTML = findings.map(function (f) {
+            var sev = (f.severity || "low").toLowerCase();
+            var detail = "";
+            if (f.description) {
+              detail += '<div class="dash-finding-detail-section"><span class="dash-finding-detail-label">Description</span><div class="dash-finding-detail-text">' + esc(f.description) + '</div></div>';
             }
-            return '<div class="dash-item">' +
-              '<div><div class="dash-item-name">' + esc(s.scan_type) + ' scan</div>' +
-              '<div class="dash-item-meta">' + formatDate(s.created_at) + (issueText ? " &middot; " + esc(issueText) : "") + '</div></div>' +
-              '<span class="dash-item-status ' + esc(s.status) + '">' + esc(s.status) + '</span>' +
+            if (f.file_path) {
+              detail += '<div class="dash-finding-detail-section"><span class="dash-finding-detail-label">Location</span><div class="dash-finding-detail-text"><code>' + esc(f.file_path) + (f.line_number ? ':' + f.line_number : '') + '</code></div></div>';
+            }
+            if (f.remediation) {
+              detail += '<div class="dash-finding-detail-section"><span class="dash-finding-detail-label">Remediation</span><div class="dash-finding-detail-text">' + esc(f.remediation) + '</div></div>';
+            }
+            var llmBlock = "";
+            if (f.llm_explanation) {
+              llmBlock = '<div class="dash-llm-explain">' +
+                '<button class="dash-llm-explain-toggle" type="button">&#9654; Local LLM Explanation</button>' +
+                '<div class="dash-llm-explain-body">' + esc(f.llm_explanation) + '</div>' +
+                '</div>';
+            }
+
+            return '<div class="dash-finding" data-id="' + esc(f.id) + '">' +
+              '<div class="dash-finding-row">' +
+              '<div class="dash-finding-sev ' + sev + '"></div>' +
+              '<div class="dash-finding-body">' +
+              '<div class="dash-finding-title">' + esc(f.title) + '</div>' +
+              '<div class="dash-finding-meta">' +
+              (f.file_path ? '<code>' + esc(f.file_path) + (f.line_number ? ':' + f.line_number : '') + '</code>' : '') +
+              '</div>' +
+              '</div>' +
+              '<span class="dash-finding-badge ' + sev + '">' + sev + '</span>' +
+              '<span class="dash-finding-chevron">&#9654;</span>' +
+              '</div>' +
+              '<div class="dash-finding-detail">' + detail + llmBlock + '</div>' +
               '</div>';
           }).join("");
         }
       });
   }
 
-  function esc(str) {
-    if (!str) return "";
-    var d = document.createElement("div");
-    d.textContent = str;
-    return d.innerHTML;
+  /* ---- Audit log ---- */
+  function loadAuditLog(userId) {
+    if (!sb || !activeSession) return;
+    sb.from("audit_log")
+      .select("id, event_type, description, metadata, created_at")
+      .eq("user_id", userId)
+      .order("created_at", { ascending: false })
+      .limit(20)
+      .then(function (res) {
+        var el = document.getElementById("audit-list");
+        if (res.error || !res.data || res.data.length === 0) {
+          if (el) el.innerHTML = '<div class="dash-empty"><p>No audit events yet.</p></div>';
+          return;
+        }
+        if (el) {
+          el.innerHTML = res.data.map(function (e) {
+            var dotClass = "";
+            if (e.event_type === "scan_complete" || e.event_type === "sandbox_ready") dotClass = "orange";
+            else if (e.event_type === "verdict_pass" || e.event_type === "system_init") dotClass = "green";
+
+            var hash = hashChain(e.id + e.created_at + (e.description || ""));
+
+            return '<div class="dash-audit-event">' +
+              '<div class="dash-audit-dot ' + dotClass + '"></div>' +
+              '<div class="dash-audit-body">' +
+              '<div class="dash-audit-text"><strong>' + esc(e.event_type || "event") + '</strong> \u2014 ' + esc(e.description) + '</div>' +
+              '<div class="dash-audit-hash">' + hash + '</div>' +
+              '<div class="dash-audit-time">' + formatTime(e.created_at) + ' \u00b7 ' + formatDate(e.created_at) + '</div>' +
+              '</div>' +
+              '</div>';
+          }).join("");
+        }
+      });
   }
 
   /* ---- Account modal ---- */
@@ -171,6 +277,26 @@
     if (sb) sb.auth.signOut().then(function () { window.location.href = HOME_URL; });
   }
 
+  /* ---- Finding expand/collapse ---- */
+  function wireFindings() {
+    document.addEventListener("click", function (e) {
+      var row = e.target.closest(".dash-finding-row");
+      if (row) {
+        var finding = row.parentElement;
+        finding.classList.toggle("open");
+        return;
+      }
+      var toggle = e.target.closest(".dash-llm-explain-toggle");
+      if (toggle) {
+        var body = toggle.nextElementSibling;
+        if (body) body.classList.toggle("open");
+        toggle.textContent = body && body.classList.contains("open")
+          ? "\u25BC Local LLM Explanation"
+          : "\u25B6 Local LLM Explanation";
+      }
+    });
+  }
+
   /* ---- Init ---- */
   function init() {
     redirectIfNoAuth();
@@ -182,24 +308,19 @@
       if (!session) return;
       var user = session.user;
       loadProfile(user);
-      loadProjects(user.id);
-      loadScans(user.id);
+      loadSessions(user.id);
     });
 
     sb.auth.onAuthStateChange(function (event, session) {
       if (event === "SIGNED_OUT") window.location.href = HOME_URL;
       if (event === "SIGNED_IN" && session) {
         loadProfile(session.user);
-        loadProjects(session.user.id);
-        loadScans(session.user.id);
+        loadSessions(session.user.id);
       }
     });
 
-    var logoutBtn = document.getElementById("btn-logout");
-    if (logoutBtn) logoutBtn.addEventListener("click", doLogout);
-
-    var accountBtn = document.getElementById("btn-account");
-    if (accountBtn) accountBtn.addEventListener("click", openAccountModal);
+    var avatarBtn = document.getElementById("avatar-btn");
+    if (avatarBtn) avatarBtn.addEventListener("click", openAccountModal);
 
     var closeAccount = document.getElementById("close-account");
     if (closeAccount) closeAccount.addEventListener("click", closeAccountModal);
@@ -220,6 +341,8 @@
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape") closeAccountModal();
     });
+
+    wireFindings();
   }
 
   if (document.readyState === "loading") {
