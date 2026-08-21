@@ -3,7 +3,7 @@
 :root {
   --bg:        #080b0e;
   --panel:     rgba(12, 14, 18, 0.92);
-  --border:    rgba(210, 214, 219, 0.14);
+  --border:    rgba(210, 214, 219, 0.664);
   --text:      hsl(36, 33%, 97%);
   --muted:     #9b9da1;
   --orange:    #ff6428;
@@ -159,7 +159,7 @@ h1 span { color: var(--orange); }
 
 /* ── Pipeline ── */
 .pipeline {
-  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  display: flex; align-items: center; justify-content: space-around; gap: 12px; flex-wrap: wrap;
 }
 .pipe-step {
   display: flex; flex-direction: column; align-items: center; gap: 8px;

@@ -33,9 +33,6 @@
       </nav>
 
       <div class="sidebar-bottom">
-        <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">
-          <i class="fa-solid fa-sun" id="themeIcon"></i>
-        </button>
         <button class="signout-btn" id="signoutBtn">
           <i class="fa-solid fa-right-from-bracket"></i> Sign Out
         </button>
@@ -52,7 +49,9 @@
           <h1>Welcome back, <span id="userDisplay">—</span></h1>
         </div>
         <div class="topbar-right">
-          <div class="status-pill"><i></i> SANDBOX ACTIVE</div>
+          <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">
+          <i class="fa-solid fa-sun" id="themeIcon"></i>
+          </button>
         </div>
       </header>
 
@@ -64,11 +63,11 @@
           <span class="pipe-arrow">→</span>
           <div class="pipe-step done"><i class="fa-solid fa-box"></i><span>SANDBOX</span></div>
           <span class="pipe-arrow">→</span>
-          <div class="pipe-step"><i class="fa-solid fa-radar"></i><span>SCAN</span></div>
+          <div class="pipe-step done"><i class="fa-solid fa-radar"></i><span>SCAN</span></div>
           <span class="pipe-arrow">→</span>
-          <div class="pipe-step"><i class="fa-solid fa-circle-check"></i><span>VALIDATE</span></div>
+          <div class="pipe-step done"><i class="fa-solid fa-circle-check"></i><span>VALIDATE</span></div>
           <span class="pipe-arrow">→</span>
-          <div class="pipe-step"><i class="fa-solid fa-rocket"></i><span>SHIP</span></div>
+          <div class="pipe-step done"><i class="fa-solid fa-rocket"></i><span>SHIP</span></div>
         </div>
       </section>
 
@@ -109,48 +108,6 @@
           <button class="dash-btn dash-btn-disabled" disabled>COMING SOON</button>
         </div>
       </section>
-
-      <!-- RECENT ACTIVITY + QUICK START -->
-      <div class="bottom-grid">
-
-
-        <section class="panel activity-panel">
-          <p class="panel-label">RECENT ACTIVITY</p>
-          <div class="activity-empty">
-            <i class="fa-solid fa-inbox fa-2x"></i>
-            <p>No activity yet. Run your first scan to get started.</p>
-          </div>
-        </section>
-
-        <section class="panel quickstart-panel">
-          <p class="panel-label">QUICK START</p>
-          <div class="quickstart-list">
-            <div class="qs-item">
-              <div class="qs-num">01</div>
-              <div>
-                <p class="qs-title">Configure your sandbox</p>
-                <p class="qs-sub">Set filesystem, network & process policies.</p>
-              </div>
-            </div>
-            <div class="qs-item">
-              <div class="qs-num">02</div>
-              <div>
-                <p class="qs-title">Run your first scan</p>
-                <p class="qs-sub">Let Aegis scan your AI-generated code.</p>
-              </div>
-            </div>
-            <div class="qs-item">
-              <div class="qs-num">03</div>
-              <div>
-                <p class="qs-title">Review the report</p>
-                <p class="qs-sub">See findings, validate fixes, ship safely.</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-      </div>
-
     </main>
   </div>
 
