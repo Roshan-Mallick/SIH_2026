@@ -14,6 +14,41 @@
   transition: background 0.45s ease-in-out, border-color 0.45s ease-in-out;
 }
 
+.services .visual-card {
+  height: 292px;
+  background-image: none;
+}
+
+.services .visual-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("../../assets/images/sandbox-architecture-light-background-original-accents.png") center / cover no-repeat;
+  opacity: 0.48;
+  z-index: 0;
+}
+
+.services .visual-card .scan-lines {
+  display: none;
+}
+
+.services .visual-card::after {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.16), rgba(0, 0, 0, 0.78));
+  z-index: 1;
+}
+
+.services .visual-card h3 {
+  color: #fff;
+}
+
+.services .intelligence-card {
+  background-image: url("../../assets/images/GRABBI~1.JPE");
+  background-position: center calc(40% + 4px);
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: #fff;
+}
+
 .card::after {
   content: "";
   position: absolute;
@@ -57,6 +92,10 @@ body.light-mode .card::after {
   background: linear-gradient(180deg, transparent 35%, rgba(78, 54, 38, 0.2));
 }
 
+.services .intelligence-card::after {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.78));
+}
+
 .scan-lines {
   position: absolute;
   inset: 0;
@@ -86,6 +125,26 @@ body.light-mode .card::after {
   color: var(--muted);
   font-size: 13px;
   line-height: 1.6;
+}
+
+.services .intelligence-card h3,
+.services .intelligence-card p {
+  color: #fff;
+}
+
+.services .code-card {
+  background-image: url("../../assets/images/sandbox.jpeg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.services .code-card::after {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.16), rgba(0, 0, 0, 0.78));
+}
+
+.services .code-card h3 {
+  color: #fff;
 }
 
 .code-card pre {
