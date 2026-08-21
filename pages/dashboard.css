@@ -212,3 +212,52 @@ body.light .sidebar { background: rgba(210,195,180,0.9); }
   .main { padding: 24px 20px 40px; }
   .stats-row { grid-template-columns: 1fr 1fr; }
 }
+
+/* ── Subscription UI ── */
+.plan-header {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 6px;
+}
+.plan-title {
+  font-size: 22px; font-weight: 700; letter-spacing: -0.5px;
+}
+.plan-desc {
+  color: var(--muted); font-size: 13px; margin-bottom: 20px; min-height: 20px;
+}
+.license-stats {
+  display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-bottom: 20px;
+  padding: 12px 16px; background: rgba(0,0,0,0.2); border-radius: 8px; border: 1px solid var(--border);
+}
+.license-stats span strong { color: var(--text); font-weight: 600; margin-left: 6px; }
+
+.dash-btn {
+  display: inline-block; padding: 10px 18px; border-radius: 8px;
+  font-size: 12px; font-weight: 700; text-decoration: none; cursor: pointer;
+  transition: .2s ease; text-align: center;
+}
+.dash-btn-primary {
+  background: rgba(255,100,40,0.15); border: 1px solid rgba(255,100,40,0.4);
+  color: var(--orange);
+}
+.dash-btn-primary:hover {
+  background: rgba(255,100,40,0.25);
+}
+.dash-btn-secondary {
+  background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+  color: var(--text);
+}
+.dash-btn-secondary:hover {
+  background: rgba(255,255,255,0.1);
+}
+.dash-btn-disabled {
+  background: rgba(255,255,255,0.02); border: 1px solid var(--border);
+  color: var(--muted); cursor: not-allowed;
+}
+
+.download-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 18px 20px; border: 1px solid var(--border); border-radius: 12px;
+  background: rgba(0,0,0,0.2); flex-wrap: wrap; gap: 16px;
+}
+.download-info h4 { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+.download-info p { font-size: 12px; color: var(--muted); }
+

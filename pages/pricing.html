@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Aegis PreFlight — Pricing" />
+  <title>Aegis — Pricing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/main.css" />
+</head>
+
+<body>
+  <main>
+    <section class="hero" style="min-height: auto; padding: 120px 24px 60px;">
+      <div class="hero-bg">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+        <div class="orb orb-4"></div>
+        <div class="orb orb-5"></div>
+        <div class="orb orb-6"></div>
+        <div class="orb orb-7"></div>
+      </div>
+
+      <div class="hero-glass" style="max-width: 1200px;">
+        <div class="hero-inner" style="padding: 40px 48px 60px;">
+          <nav class="hero-nav">
+            <a href="../index.html" class="hero-logo">
+              <img id="theme-logo" src="../assets/images/logo-dark.png" alt="Aegis" />
+            </a>
+            <div class="hero-nav-links">
+              <a class="inactive" href="../index.html">HOME</a>
+              <a class="inactive" href="about.html">ABOUT</a>
+              <a class="inactive" href="product.html">PRODUCT</a>
+              <a class="active" href="pricing.html">PRICING</a>
+              <a class="inactive" href="service.html">SERVICE</a>
+              <a class="inactive" href="contacts.html">CONTACT</a>
+              <button class="theme-toggle" type="button" aria-label="Switch to light mode" aria-pressed="false">
+                <span class="theme-icon" aria-hidden="true">&#9728;</span>
+              </button>
+            </div>
+          </nav>
+
+          <div style="text-align: center; margin-top: 60px; margin-bottom: 80px;">
+            <p class="hero-eyebrow" style="margin-bottom:12px;">PRICING</p>
+            <h1 class="hero-title">Choose your <span>protection.</span></h1>
+            <p class="hero-desc" style="margin: 20px auto 0; text-align: center;">Security that scales with your workflow.</p>
+          </div>
+
+          <div class="cards">
+            <!-- Free Plan -->
+            <article class="card visual-card" style="padding: 32px;">
+              <div class="scan-lines"></div>
+              <h3 style="font-size: 24px; margin-bottom: 8px; position:relative; z-index:2;">FREE</h3>
+              <p style="font-size: 14px; color: var(--muted); margin-bottom: 24px; min-height: 40px; position:relative; z-index:2;">For getting started.</p>
+              <div style="margin-bottom: 32px; position:relative; z-index:2;">
+                <span style="font-size: 42px; font-weight: 700; font-family: 'Space Grotesk', sans-serif;">$0</span>
+                <span style="color: var(--muted); font-size: 14px;">/mo</span>
+              </div>
+              <ul style="list-style: none; padding: 0; margin: 0 0 32px; display: flex; flex-direction: column; gap: 12px; font-size: 14px; color: var(--text); position:relative; z-index:2;">
+                <li>✓ Single local agent</li>
+                <li>✓ Basic filesystem controls</li>
+                <li>✓ Basic secret/leak scanning</li>
+                <li>✓ Basic security checks</li>
+                <li>✓ Community support</li>
+              </ul>
+              <div style="position:relative; z-index:2; margin-top: auto;">
+                <a href="signup.html" class="hero-btn hero-btn-secondary" style="width: 100%; text-align: center; display: block; box-sizing: border-box;">GET STARTED</a>
+              </div>
+            </article>
+
+            <!-- Plus Plan -->
+            <article class="card intelligence-card" style="padding: 32px; border-color: var(--orange);">
+              <div class="card-icon" style="top: 32px; right: 32px;">♧</div>
+              <h3 style="font-size: 24px; margin-bottom: 8px; color: var(--orange); position:relative; z-index:2;">PLUS</h3>
+              <p style="font-size: 14px; color: var(--muted); margin-bottom: 24px; min-height: 40px; position:relative; z-index:2;">For serious developers.</p>
+              <div style="margin-bottom: 32px; position:relative; z-index:2;">
+                <span style="font-size: 42px; font-weight: 700; font-family: 'Space Grotesk', sans-serif;">$20</span>
+                <span style="color: var(--muted); font-size: 14px;">/mo</span>
+              </div>
+              <ul style="list-style: none; padding: 0; margin: 0 0 32px; display: flex; flex-direction: column; gap: 12px; font-size: 14px; color: var(--text); position:relative; z-index:2;">
+                <li>✓ Everything in Free</li>
+                <li>✓ Multi-agent support</li>
+                <li>✓ Advanced security policies</li>
+                <li>✓ Dependency &amp; code scanning</li>
+                <li>✓ Detailed security reports</li>
+                <li>✓ Priority support</li>
+              </ul>
+              <div style="position:relative; z-index:2; margin-top: auto;">
+                <a href="signup.html" class="hero-btn hero-btn-primary" style="width: 100%; text-align: center; display: block; box-sizing: border-box;">UPGRADE TO PLUS</a>
+              </div>
+            </article>
+
+            <!-- Premium Plan -->
+            <article class="card code-card" style="padding: 32px;">
+              <div class="card-icon" style="top: 32px; right: 32px;">☁</div>
+              <h3 style="font-size: 24px; margin-bottom: 8px; position:relative; z-index:2;">PREMIUM</h3>
+              <p style="font-size: 14px; color: var(--muted); margin-bottom: 24px; min-height: 40px; position:relative; z-index:2;">For advanced teams/security.</p>
+              <div style="margin-bottom: 32px; position:relative; z-index:2;">
+                <span style="font-size: 42px; font-weight: 700; font-family: 'Space Grotesk', sans-serif;">$50</span>
+                <span style="color: var(--muted); font-size: 14px;">/mo</span>
+              </div>
+              <ul style="list-style: none; padding: 0; margin: 0 0 32px; display: flex; flex-direction: column; gap: 12px; font-size: 14px; color: var(--text); position:relative; z-index:2;">
+                <li>✓ Everything in Plus</li>
+                <li>✓ Advanced sandboxing</li>
+                <li>✓ Advanced threat analysis</li>
+                <li>✓ Full audit reports</li>
+                <li>✓ Expanded license activations</li>
+                <li>✓ Premium support</li>
+              </ul>
+              <div style="position:relative; z-index:2; margin-top: auto;">
+                <a href="signup.html" class="hero-btn hero-btn-secondary" style="width: 100%; text-align: center; display: block; box-sizing: border-box;">UPGRADE TO PREMIUM</a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../js/theme.js"></script>
+  <script src="../js/navigation.js"></script>
+</body>
+</html>
