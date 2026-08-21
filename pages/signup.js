@@ -1,12 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
-  var SUPABASE_URL     = "https://aiexfmkkvqacyxrgjdgl.supabase.co";
-  var SUPABASE_ANON_KEY = "sb_publishable_c1tgCLDnsaa4qVSHLWH_9g_1WIU9Hwp";
-  var REDIRECT_URL     = window.location.origin + "/pages/dashboard.html";
-
-  var sb = null;
-  if (typeof supabase !== "undefined" && supabase.createClient) {
-    sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-  }
+  var sb = window.AegisAuth ? AegisAuth.getClient() : null;
+  var REDIRECT_URL = window.AegisAuth ? AegisAuth.getDashboardUrl() : (window.location.origin + "/pages/dashboard.html");
 
   function showMessage(msg, isError) {
     var el = document.getElementById("signupMessage");
@@ -45,25 +39,30 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   if (localStorage.getItem("aegis-theme") === "light") document.body.classList.add("light");
 
-  // ── Google OAuth ──────────────────────────────────────
-  document.getElementById("googleBtn")?.addEventListener("click", () => {
+  function signInWithProvider(provider) {
     if (!sb) { showMessage("Auth not configured.", true); return; }
     sb.auth.signInWithOAuth({
-      provider: "google",
-      options:  { redirectTo: REDIRECT_URL },
-    });
-  });
-
-  // ── GitHub OAuth ──────────────────────────────────────
-  document.getElementById("githubBtn")?.addEventListener("click", () => {
-    if (!sb) { showMessage("Auth not configured.", true); return; }
-    sb.auth.signInWithOAuth({
-      provider: "github",
-      options:  { redirectTo: REDIRECT_URL },
+      provider: provider,
+      options: {
+        // Supabase returns here with the session after the provider consent.
+        redirectTo: REDIRECT_URL,
+      },
     }).then(({ error }) => {
       if (error) showMessage(error.message, true);
     });
-  });
+  }
+
+  // ── Google OAuth ──────────────────────────────────────
+  document.getElementById("googleBtn")?.addEventListener("click", () => signInWithProvider("google"));
+
+  // ── GitHub OAuth ──────────────────────────────────────
+  document.getElementById("githubBtn")?.addEventListener("click", () => signInWithProvider("github"));
+
+  // Surface OAuth failures that land back on this page (?error=...)
+  if (window.AegisAuth && AegisAuth.getOAuthError()) {
+    showMessage("Google/GitHub sign-in failed: " + AegisAuth.getOAuthError(), true);
+    AegisAuth.clearOAuthParams();
+  }
 
   // ── Email / Password Sign Up ──────────────────────────
   const form = document.getElementById("signupForm");
@@ -105,19 +104,14 @@ document.addEventListener("DOMContentLoaded", () => {
     // Supabase may auto-confirm or require email verification
     if (data?.session) {
       showMessage("Account created! Redirecting...", false);
-      setTimeout(() => { window.location.href = REDIRECT_URL; }, 1200);
+      setTimeout(() => { window.location.replace(REDIRECT_URL); }, 600);
     } else {
       showMessage("Check your email to confirm your account, then sign in.", false);
     }
   });
 
-  // Redirect if already logged in
-  if (sb) {
-    sb.auth.getSession().then(({ data: { session } }) => {
-      if (session) window.location.href = REDIRECT_URL;
-    });
-    sb.auth.onAuthStateChange((event, session) => {
-      if (event === "SIGNED_IN" && session) window.location.href = REDIRECT_URL;
-    });
-  }
+  // Redirect if already logged in (INITIAL_SESSION fires after restore)
+  AegisAuth.onSession((session) => {
+    if (session) window.location.replace(REDIRECT_URL);
+  });
 });

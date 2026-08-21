@@ -1,32 +1,23 @@
 // Landing page auth state: bounce authenticated users to the dashboard.
 (function () {
-  var SUPABASE_URL = "https://aiexfmkkvqacyxrgjdgl.supabase.co";
-  var SUPABASE_ANON_KEY = "sb_publishable_c1tgCLDnsaa4qVSHLWH_9g_1WIU9Hwp";
-
-  if (typeof supabase === "undefined" || !supabase.createClient) return;
-
-  var sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
   var path = window.location.pathname;
   var isLandingPage = path === "/" || path === "/index.html";
   if (!isLandingPage) return;
 
-  var redirecting = false;
-  function goToDashboard() {
-    if (redirecting) return;
-    redirecting = true;
-    window.location.replace("/pages/dashboard.html");
+  if (!window.AegisAuth) return;
+
+  // OAuth error fallback (e.g. redirect_to rejected, provider failure):
+  // surface it on the login page instead of silently sitting on the landing page.
+  var oauthError = AegisAuth.getOAuthError();
+  if (oauthError) {
+    AegisAuth.clearOAuthParams();
+    window.location.replace(AegisAuth.getLoginUrl() + "?error=" + encodeURIComponent(oauthError));
+    return;
   }
 
-  // Handles OAuth callbacks that land on "/" (e.g. legacy links without
-  // redirectTo): the client exchanges ?code=... and fires SIGNED_IN.
-  sb.auth.getSession().then(function ({ data: { session } }) {
-    if (session) goToDashboard();
-  });
-
-  sb.auth.onAuthStateChange(function (event, session) {
-    if ((event === "SIGNED_IN" || event === "PASSWORD_RECOVERY") && session) {
-      goToDashboard();
-    }
+  // INITIAL_SESSION arrives only after Supabase finished restoring the
+  // session (localStorage or OAuth hash) — no race with client init.
+  AegisAuth.onSession(function (session) {
+    if (session) window.location.replace(AegisAuth.getDashboardUrl());
   });
 })();
