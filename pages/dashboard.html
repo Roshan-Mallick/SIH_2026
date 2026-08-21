@@ -28,8 +28,8 @@
       </a>
 
       <nav class="sidebar-nav">
-        <a href="dashboard.html" class="nav-item active"><i class="fa-solid fa-gauge-high"></i><span>Dashboard</span></a>
-        <a href="#" class="nav-item"><i class="fa-solid fa-gear"></i><span>Settings</span></a>
+        <a href="#" class="nav-item active"><i class="fa-solid fa-gauge-high"></i><span>Dashboard</span></a>
+        <a href="#settingsModal" class="nav-item" id="settingsNav"><i class="fa-solid fa-gear"></i><span>Settings</span></a>
       </nav>
 
       <div class="sidebar-bottom">
@@ -109,6 +109,94 @@
         </div>
       </section>
     </main>
+  </div>
+
+  <div class="settings-backdrop" id="settingsModal" aria-hidden="true">
+    <section class="settings-modal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+      <div class="settings-header">
+        <div>
+          <p class="panel-label">SETTINGS</p>
+          <h2 id="settingsTitle">Your workspace account information</h2>
+          <p class="settings-intro">Review how Aegis protects your AI-generated code before it ships.</p>
+        </div>
+        <button class="settings-close" id="settingsClose" type="button" aria-label="Close settings">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="settings-account">
+        <div class="settings-avatar"><i class="fa-solid fa-user"></i></div>
+        <div>
+          <strong id="settingsUser">—</strong>
+          <span>Signed-in Aegis account</span>
+        </div>
+        <span class="settings-status"><i></i> Protected</span>
+      </div>
+
+      <div class="settings-layout">
+        <nav class="settings-nav" aria-label="Settings sections">
+          <button class="settings-tab is-active" type="button" data-settings-page="profile" aria-selected="true"><i class="fa-solid fa-user"></i><span>Profile</span></button>
+          <button class="settings-tab" type="button" data-settings-page="email" aria-selected="false"><i class="fa-solid fa-envelope"></i><span>Email</span></button>
+          <button class="settings-tab" type="button" data-settings-page="password" aria-selected="false"><i class="fa-solid fa-lock"></i><span>Password</span></button>
+          <button class="settings-tab" type="button" data-settings-page="security" aria-selected="false"><i class="fa-solid fa-shield-halved"></i><span>Security</span></button>
+          <button class="settings-tab" type="button" data-settings-page="plan" aria-selected="false"><i class="fa-solid fa-gear"></i><span>Plan</span></button>
+        </nav>
+
+        <div class="settings-pages">
+          <section class="settings-page is-active" data-settings-content="profile">
+            <p class="settings-card-label">PROFILE</p>
+            <h3>Personalise your workspace</h3>
+            <p class="settings-page-copy">Your signed-in identity is connected to this Aegis security workspace.</p>
+            <div class="settings-profile-card"><div class="settings-avatar"><i class="fa-solid fa-user"></i></div><div><strong id="settingsProfileUser">—</strong><span id="settingsProfileEmail">—</span></div></div>
+            <form class="profile-form" id="profileForm">
+              <label for="displayNameInput">Display name</label>
+              <div class="profile-form-row">
+                <input id="displayNameInput" name="displayName" type="text" maxlength="80" autocomplete="name" required />
+                <button class="dash-btn dash-btn-primary" type="submit" id="saveDisplayNameBtn">Save name</button>
+              </div>
+              <p class="profile-form-message" id="profileFormMessage" role="status" aria-live="polite"></p>
+            </form>
+            <button class="dash-btn dash-btn-secondary profile-signout" id="profileSignoutBtn" type="button"><i class="fa-solid fa-right-from-bracket"></i> Sign out</button>
+          </section>
+
+          <section class="settings-page" data-settings-content="email" hidden>
+            <p class="settings-card-label">EMAIL</p>
+            <h3>Keep your account reachable</h3>
+            <p class="settings-page-copy">Your account email is used for sign-in alerts and security notifications.</p>
+            <div class="settings-detail-row"><span>Current email</span><strong id="settingsEmail">—</strong></div>
+            <button class="dash-btn dash-btn-secondary" type="button">Update email</button>
+          </section>
+
+          <section class="settings-page" data-settings-content="password" hidden>
+            <p class="settings-card-label">PASSWORD</p>
+            <h3>Strengthen account access</h3>
+            <p class="settings-page-copy">Use a unique password and change it regularly to keep your workspace protected.</p>
+            <div class="settings-detail-row"><span>Password status</span><strong>Managed securely</strong></div>
+            <button class="dash-btn dash-btn-secondary" type="button">Change password</button>
+          </section>
+
+          <section class="settings-page" data-settings-content="security" hidden>
+            <p class="settings-card-label">SECURITY</p>
+            <h3>Protection is active</h3>
+            <p class="settings-page-copy">Aegis keeps AI-generated work inside controlled boundaries and validates it before release.</p>
+            <div class="settings-security-list"><span><i class="fa-solid fa-circle-check"></i> Sandbox isolation</span><span><i class="fa-solid fa-circle-check"></i> Policy controls</span><span><i class="fa-solid fa-circle-check"></i> Preflight validation</span></div>
+          </section>
+
+          <section class="settings-page" data-settings-content="plan" hidden>
+            <p class="settings-card-label">PLAN</p>
+            <h3>Your Aegis plan</h3>
+            <p class="settings-page-copy">Your current plan gives you a clear starting point for secure AI-assisted development.</p>
+            <div class="settings-plan-card"><strong>FREE</strong><span>Basic access</span><em>Active</em></div>
+            <a class="dash-btn dash-btn-primary" href="pricing.html">Explore plans</a>
+          </section>
+        </div>
+      </div>
+
+      <div class="settings-footer">
+        <span><i class="fa-solid fa-shield-halved"></i> Security controls are active</span>
+        <button class="dash-btn dash-btn-secondary" id="settingsDone" type="button">Close</button>
+      </div>
+    </section>
   </div>
 
   <script src="../js/supabase-client.js"></script>
