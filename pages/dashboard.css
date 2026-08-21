@@ -3,7 +3,7 @@
 :root {
   --bg:        #080b0e;
   --panel:     rgba(12, 14, 18, 0.92);
-  --border:    rgba(210, 214, 219, 0.14);
+  --border:    rgba(210, 214, 219, 0.664);
   --text:      hsl(36, 33%, 97%);
   --muted:     #9b9da1;
   --orange:    #ff6428;
@@ -20,6 +20,7 @@ body {
   color: var(--text);
   font-family: "Inter", Arial, sans-serif;
   overflow-x: hidden;
+  transition: background 0.45s ease-in-out, color 0.45s ease-in-out;
 }
 
 /* ── Orbs ── */
@@ -50,6 +51,7 @@ body {
   background: rgba(8,10,14,0.85);
   backdrop-filter: blur(14px);
   position: sticky; top: 0; height: 100vh;
+  transition: background 0.45s ease-in-out, border-color 0.45s ease-in-out;
 }
 
 .sidebar-logo img { height: 36px; width: auto; display: block; margin-bottom: 40px; }
@@ -73,6 +75,7 @@ body {
   width: 36px; height: 36px; border-radius: 50%;
   border: 1px solid var(--border); background: transparent;
   color: var(--orange); cursor: pointer; font-size: 15px;
+  transition: background-color 0.45s ease-in-out, border-color 0.45s ease-in-out, color 0.45s ease-in-out;
 }
 
 .signout-btn {
@@ -125,6 +128,7 @@ h1 span { color: var(--orange); }
   border-radius: 16px;
   background: var(--panel);
   backdrop-filter: blur(10px);
+  transition: background 0.45s ease-in-out, border-color 0.45s ease-in-out, color 0.45s ease-in-out;
 }
 .accent-card { border-color: rgba(255,100,40,0.4); }
 .stat-label {
@@ -146,6 +150,7 @@ h1 span { color: var(--orange); }
   backdrop-filter: blur(10px);
   padding: 24px 28px;
   margin-bottom: 20px;
+  transition: background 0.45s ease-in-out, border-color 0.45s ease-in-out, color 0.45s ease-in-out;
 }
 .panel-label {
   font-size: 9px; font-weight: 800; letter-spacing: 1.5px;
@@ -154,7 +159,7 @@ h1 span { color: var(--orange); }
 
 /* ── Pipeline ── */
 .pipeline {
-  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  display: flex; align-items: center; justify-content: space-around; gap: 12px; flex-wrap: wrap;
 }
 .pipe-step {
   display: flex; flex-direction: column; align-items: center; gap: 8px;
@@ -232,7 +237,8 @@ body.light .sidebar { background: rgba(210,195,180,0.9); }
 .dash-btn {
   display: inline-block; padding: 10px 18px; border-radius: 8px;
   font-size: 12px; font-weight: 700; text-decoration: none; cursor: pointer;
-  transition: .2s ease; text-align: center;
+  transition: background-color 0.45s ease-in-out, border-color 0.45s ease-in-out, color 0.45s ease-in-out;
+  text-align: center;
 }
 .dash-btn-primary {
   background: rgba(255,100,40,0.15); border: 1px solid rgba(255,100,40,0.4);
