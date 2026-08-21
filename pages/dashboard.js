@@ -155,3 +155,41 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (event.key === "Escape") setSettingsOpen(false);
   });
 });
+
+// ── Aegis Desktop — fetch latest GitHub release (.deb) ──
+// Independent listener so the download section works regardless of auth state.
+document.addEventListener("DOMContentLoaded", () => {
+  const RELEASE_API_URL = "https://api.github.com/repos/Roshan-Mallick/aegis-preflight/releases/latest";
+  const releaseInfo = document.getElementById("downloadReleaseInfo");
+  const downloadBtn = document.getElementById("downloadAegisDesktop");
+  if (!releaseInfo || !downloadBtn) return;
+
+  function setUnavailable() {
+    releaseInfo.textContent = "Download temporarily unavailable";
+    downloadBtn.removeAttribute("href");
+    downloadBtn.setAttribute("aria-disabled", "true");
+    downloadBtn.classList.add("dash-btn-disabled");
+    downloadBtn.classList.remove("dash-btn-primary");
+  }
+
+  fetch(RELEASE_API_URL, { headers: { Accept: "application/vnd.github+json" } })
+    .then((response) => {
+      if (!response.ok) throw new Error("GitHub API responded with " + response.status);
+      return response.json();
+    })
+    .then((release) => {
+      const debAsset = (release.assets || []).find(
+        (asset) => typeof asset.name === "string" && asset.name.toLowerCase().endsWith(".deb")
+      );
+      if (!debAsset || !debAsset.browser_download_url) throw new Error("No .deb asset in latest release");
+
+      const tag = release.tag_name || "";
+      releaseInfo.textContent = tag ? tag + " • Linux" : "Latest • Linux";
+      downloadBtn.href = debAsset.browser_download_url;
+      downloadBtn.setAttribute("title", debAsset.name);
+      downloadBtn.setAttribute("aria-disabled", "false");
+      downloadBtn.classList.remove("dash-btn-disabled");
+      downloadBtn.classList.add("dash-btn-primary");
+    })
+    .catch(() => setUnavailable());
+});
