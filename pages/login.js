@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   var SUPABASE_URL = "https://aiexfmkkvqacyxrgjdgl.supabase.co";
   var SUPABASE_ANON_KEY = "sb_publishable_c1tgCLDnsaa4qVSHLWH_9g_1WIU9Hwp";
-  var REDIRECT_URL = "https://aegis-preflight.vercel.app/pages/dashboard.html";
+  var REDIRECT_URL = window.location.origin + "/pages/dashboard.html";
 
   var sb = null;
   if (typeof supabase !== "undefined" && supabase.createClient) {
@@ -52,6 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!sb) { showMessage("Auth not configured.", true); return; }
     sb.auth.signInWithOAuth({
       provider: "github",
+      options: { redirectTo: REDIRECT_URL },
     }).then(({ error }) => {
       if (error) console.error("[aegis] GitHub OAuth error:", error);
     });

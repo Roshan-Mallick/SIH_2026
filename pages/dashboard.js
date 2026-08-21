@@ -16,11 +16,24 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   // Wait for session (handles hash fragment from OAuth)
-  const { data: { session }, error } = await sb.auth.getSession();
+  let { data: { session }, error } = await sb.auth.getSession();
+
+  // PKCE race fix: after an OAuth redirect the URL carries ?code=... and the
+  // client is still exchanging it for a session. getSession() may return null
+  // before the exchange completes — wait briefly for SIGNED_IN instead of
+  // bouncing the user to the login page.
+  if (!session && new URLSearchParams(window.location.search).has("code")) {
+    session = await new Promise((resolve) => {
+      const { data: { subscription } } = sb.auth.onAuthStateChange((event, s) => {
+        if (s) { clearTimeout(timer); subscription.unsubscribe(); resolve(s); }
+      });
+      const timer = setTimeout(() => { subscription.unsubscribe(); resolve(null); }, 5000);
+    });
+  }
 
   if (!session) {
     // Not logged in — go back to login
-    window.location.href = LOGIN_URL;
+    window.location.replace(LOGIN_URL);
     return;
   }
 
