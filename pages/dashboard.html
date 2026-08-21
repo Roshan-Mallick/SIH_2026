@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — Aegis PreFlight</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <link rel="stylesheet" href="dashboard.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+  <div class="orb orb-ring"></div>
+  <div class="orb orb-top"></div>
+  <div class="orb orb-left"></div>
+  <div class="orb orb-small"></div>
+  <div class="orb orb-bottom"></div>
+
+  <div class="shell">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <a href="../index.html" class="sidebar-logo">
+        <img src="../assets/images/logo-dark.png" alt="Aegis" id="sidebar-logo" />
+      </a>
+
+      <nav class="sidebar-nav">
+        <a href="#" class="nav-item active"><i class="fa-solid fa-gauge-high"></i><span>Dashboard</span></a>
+        <a href="#" class="nav-item"><i class="fa-solid fa-shield-halved"></i><span>Sandbox</span></a>
+        <a href="#" class="nav-item"><i class="fa-solid fa-magnifying-glass-chart"></i><span>Scans</span></a>
+        <a href="#" class="nav-item"><i class="fa-solid fa-file-lines"></i><span>Reports</span></a>
+        <a href="#" class="nav-item"><i class="fa-solid fa-gear"></i><span>Settings</span></a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">
+          <i class="fa-solid fa-sun" id="themeIcon"></i>
+        </button>
+        <button class="signout-btn" id="signoutBtn">
+          <i class="fa-solid fa-right-from-bracket"></i> Sign Out
+        </button>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+
+      <!-- TOP BAR -->
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">AI CODE SECURITY · PREFLIGHT</p>
+          <h1>Welcome back, <span id="userDisplay">—</span></h1>
+        </div>
+        <div class="topbar-right">
+          <div class="status-pill"><i></i> SANDBOX ACTIVE</div>
+        </div>
+      </header>
+
+      <!-- STATS ROW -->
+      <div class="stats-row">
+        <div class="stat-card">
+          <p class="stat-label">SCANS RUN</p>
+          <p class="stat-value">0</p>
+          <p class="stat-sub">No scans yet</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-label">ISSUES FOUND</p>
+          <p class="stat-value">0</p>
+          <p class="stat-sub">All clear</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-label">POLICIES ACTIVE</p>
+          <p class="stat-value">3</p>
+          <p class="stat-sub">Default set</p>
+        </div>
+        <div class="stat-card accent-card">
+          <p class="stat-label">PREFLIGHT STATUS</p>
+          <p class="stat-value">READY</p>
+          <p class="stat-sub">System operational</p>
+        </div>
+      </div>
+
+      <!-- PIPELINE -->
+      <section class="panel">
+        <p class="panel-label">SECURITY PIPELINE</p>
+        <div class="pipeline">
+          <div class="pipe-step done"><i class="fa-solid fa-robot"></i><span>AI AGENT</span></div>
+          <span class="pipe-arrow">→</span>
+          <div class="pipe-step done"><i class="fa-solid fa-box"></i><span>SANDBOX</span></div>
+          <span class="pipe-arrow">→</span>
+          <div class="pipe-step"><i class="fa-solid fa-radar"></i><span>SCAN</span></div>
+          <span class="pipe-arrow">→</span>
+          <div class="pipe-step"><i class="fa-solid fa-circle-check"></i><span>VALIDATE</span></div>
+          <span class="pipe-arrow">→</span>
+          <div class="pipe-step"><i class="fa-solid fa-rocket"></i><span>SHIP</span></div>
+        </div>
+      </section>
+
+      <!-- RECENT ACTIVITY + QUICK START -->
+      <div class="bottom-grid">
+
+        <section class="panel activity-panel">
+          <p class="panel-label">RECENT ACTIVITY</p>
+          <div class="activity-empty">
+            <i class="fa-solid fa-inbox fa-2x"></i>
+            <p>No activity yet. Run your first scan to get started.</p>
+          </div>
+        </section>
+
+        <section class="panel quickstart-panel">
+          <p class="panel-label">QUICK START</p>
+          <div class="quickstart-list">
+            <div class="qs-item">
+              <div class="qs-num">01</div>
+              <div>
+                <p class="qs-title">Configure your sandbox</p>
+                <p class="qs-sub">Set filesystem, network & process policies.</p>
+              </div>
+            </div>
+            <div class="qs-item">
+              <div class="qs-num">02</div>
+              <div>
+                <p class="qs-title">Run your first scan</p>
+                <p class="qs-sub">Let Aegis scan your AI-generated code.</p>
+              </div>
+            </div>
+            <div class="qs-item">
+              <div class="qs-num">03</div>
+              <div>
+                <p class="qs-title">Review the report</p>
+                <p class="qs-sub">See findings, validate fixes, ship safely.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+    </main>
+  </div>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>

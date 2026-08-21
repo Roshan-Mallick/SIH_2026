@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Sign in to Aegis PreFlight — your secure AI coding workspace." />
+  <title>Aegis PreFlight — Sign In</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <link rel="stylesheet" href="login.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+  <!-- Background orbs -->
+  <div class="orb orb-ring"></div>
+  <div class="orb orb-top"></div>
+  <div class="orb orb-left"></div>
+  <div class="orb orb-small"></div>
+  <div class="orb orb-bottom"></div>
+
+  <main class="auth-shell compact-shell">
+    <header class="topbar">
+      <a class="brand" href="../index.html">
+        <img src="../assets/images/logo-dark.png" alt="Aegis PreFlight Logo" class="brand-logo" id="brand-logo" />
+      </a>
+
+      <nav>
+        <a href="../index.html">HOME</a>
+        <a href="about.html">ABOUT</a>
+        <a href="product.html">PRODUCT</a>
+        <a href="service.html">SERVICE</a>
+        <a href="contacts.html">CONTACT</a>
+        <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">☼</button>
+      </nav>
+    </header>
+
+    <section class="signin-content">
+      <p class="eyebrow">AI CODE SECURITY · PREFLIGHT</p>
+      <h1>Welcome <span>back.</span></h1>
+      <p class="subtext">
+        Sign in to continue to your secure AI coding workspace.
+      </p>
+
+      <div class="providers">
+        <button class="provider-btn" id="googleBtn">
+          <i class="fa-brands fa-google"></i>
+          Continue with Google
+        </button>
+        <button class="provider-btn" id="githubBtn">
+          <i class="fa-brands fa-github"></i>
+          Continue with GitHub
+        </button>
+      </div>
+
+      <div class="divider"><span>OR SIGN IN WITH EMAIL</span></div>
+
+      <form id="signinForm" novalidate>
+        <div class="field">
+          <label for="signinUsername">EMAIL</label>
+          <input id="signinUsername" type="email" placeholder="you@company.com" autocomplete="username" />
+        </div>
+
+        <div class="field">
+          <label for="signinPassword">PASSWORD</label>
+          <div class="password-wrap">
+            <input id="signinPassword" type="password" placeholder="Your password" autocomplete="current-password" />
+            <button type="button" class="show-btn" data-target="signinPassword">SHOW</button>
+          </div>
+        </div>
+
+        <button class="primary-btn" type="submit">SIGN IN <span>→</span></button>
+        <p id="signinMessage" class="message"></p>
+      </form>
+
+      <p class="switch-text">
+        Don't have an account?
+        <a href="../index.html">Create Account</a>
+      </p>
+    </section>
+  </main>
+
+  <script src="login.js"></script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+:root {
+  --bg: #0d0b0a;
+  --text: #f5f0e8;
+  --muted: rgba(245, 240, 232, 0.62);
+  --orange: #ff6b2c;
+  --orange-light: #ff8a50;
+  --orange-dark: #c04d18;
+  --accent-soft: rgba(255, 107, 44, 0.16);
+  --border: rgba(255, 107, 44, 0.25);
+  --surface: #15110f;
+  --surface-2: #1b1512;
+  --glass: rgba(10, 12, 16, 0.72);
+  --glass-border: rgba(255, 255, 255, 0.18);
+  --nav-text: rgba(245, 240, 232, 0.7);
+  --body-copy: rgba(245, 240, 232, 0.62);
+  --line: rgba(245, 240, 232, 0.14);
+  --card-bg: rgba(20, 14, 12, 0.78);
+}
+
+body.light-mode {
+  --bg: #f1e1d0;
+  --text: #211b18;
+  --muted: rgba(33, 27, 24, 0.62);
+  --accent-soft: rgba(255, 107, 44, 0.12);
+  --glass: rgba(255, 249, 241, 0.68);
+  --glass-border: rgba(246, 237, 220, 0.658);
+  --nav-text: rgba(35, 28, 24, 0.68);
+  --body-copy: rgba(35, 28, 24, 0.68);
+  --line: rgba(35, 28, 24, 0.14);
+  --surface: #ebe4dc;
+  --surface-2: #e2d9d0;
+  --card-bg: rgba(255, 255, 255, 0.58);
+}

@@ -1,0 +1,80 @@
+.flow-card {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 30px 40px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.flow-step {
+  padding: 14px 20px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.06);
+  text-align: center;
+  flex: 1;
+}
+
+.flow-step span {
+  display: block;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  margin-bottom: 6px;
+}
+
+.flow-step strong {
+  display: block;
+  font: 700 14px "Space Grotesk", sans-serif;
+  letter-spacing: 0.1em;
+  margin-bottom: 4px;
+}
+
+.flow-step small {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.flow-step b {
+  color: var(--muted);
+  font-size: 18px;
+  padding: 0 12px;
+}
+
+.flow-step.active-step {
+  border-color: rgba(255, 107, 44, 0.35);
+  background: rgba(255, 107, 44, 0.08);
+}
+
+.flow-step.active-step span,
+.flow-step.active-step strong {
+  color: var(--orange);
+}
+
+.section {
+  padding: 58px 0;
+}
+
+.section-heading h2 {
+  margin-top: 0;
+}
+
+@media (max-width: 800px) {
+  .flow-card {
+    flex-direction: column;
+    gap: 12px;
+    padding: 24px;
+  }
+
+  .flow-step {
+    width: 100%;
+  }
+
+  .flow-step b {
+    display: none;
+  }
+}

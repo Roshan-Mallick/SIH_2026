@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+@import 'variables.css';
+@import 'reset.css';
+@import 'base.css';
+
+@import 'components/buttons.css';
+@import 'components/navbar.css';
+@import 'components/hero.css';
+@import 'components/cards.css';
+@import 'components/footer.css';
+
+@import 'layout/page-shell.css';
+
+@import 'pages/home.css';
+@import 'pages/about.css';
+@import 'pages/product.css';
+@import 'pages/service.css';
