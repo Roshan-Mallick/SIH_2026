@@ -8,121 +8,96 @@
   <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32.png" />
   <link rel="icon" type="image/png" sizes="64x64" href="../assets/images/favicon-64.png" />
   <link rel="apple-touch-icon" href="../assets/images/apple-touch-icon.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../css/main.css" />
 </head>
 
 <body>
-  <main>
-    <section class="hero" style="min-height: auto; padding: 120px 24px 60px;">
-      <div class="hero-bg">
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-        <div class="orb orb-3"></div>
-        <div class="orb orb-4"></div>
-        <div class="orb orb-5"></div>
-        <div class="orb orb-6"></div>
-        <div class="orb orb-7"></div>
-      </div>
+  <div class="page-orbs" aria-hidden="true">
+    <span class="orb orb-large"></span>
+    <span class="orb orb-small"></span>
+    <span class="orb orb-ring"></span>
+  </div>
 
-      <div class="hero-glass" style="max-width: 1200px;">
-        <div class="hero-inner" style="padding: 40px 48px 60px;">
-          <nav class="hero-nav">
-            <a href="../index.html" class="hero-logo">
-              <img id="theme-logo" data-base-path="../" src="../assets/images/logo-dark.png" alt="Aegis" />
-            </a>
-            <div class="hero-nav-links">
-              <a class="inactive" href="../index.html">HOME</a>
-              <a class="inactive" href="about.html">ABOUT</a>
-              <a class="inactive" href="product.html">PRODUCT</a>
-              <a class="active" href="pricing.html">PRICING</a>
-              <a class="inactive" href="service.html">SERVICE</a>
-               <a class="inactive" href="info-themed.html">INFO</a>
-              <a class="inactive" href="contacts.html">CONTACT</a>
-              <button class="theme-toggle" type="button" aria-label="Switch to light mode" aria-pressed="false">
-                <span class="theme-icon" aria-hidden="true">&#9728;</span>
-              </button>
-            </div>
-          </nav>
+  <div class="page-shell">
+    <header class="site-header">
+      <a class="brand" href="../index.html">
+        <img id="theme-logo" data-base-path="../" src="../assets/images/logo-dark.png" alt="Aegis" style="height:48px;" />
+      </a>
+      <nav class="nav-links">
+        <a href="../index.html">HOME</a>
+        <a href="about.html">ABOUT</a>
+        <a href="product.html">PRODUCT</a>
+        <a class="active" href="pricing.html" aria-current="page">PRICING</a>
+        <a href="service.html">SERVICE</a>
+        <a href="info-themed.html">INFO</a>
+        <a href="contacts.html">CONTACT</a>
+        <button class="theme-toggle" type="button" aria-label="Switch to light mode" aria-pressed="false">
+          <span class="theme-icon" aria-hidden="true">&#9728;</span>
+        </button>
+      </nav>
+    </header>
 
-          <div class="pricing-intro">
-            <p class="hero-eyebrow" style="margin-bottom:12px;">PRICING</p>
-            <h1 class="hero-title">Choose your <span>protection.</span></h1>
-            <p class="hero-desc" style="margin: 20px auto 0; text-align: center;">Security that scales with your workflow.</p>
-          </div>
+    <main>
+      <section class="hero compact" aria-labelledby="page-title">
+        <p class="eyebrow">PLANS &middot; SECURITY THAT SCALES</p>
+        <h1 id="page-title">Choose your<br /><span>protection.</span></h1>
+        <p class="hero-copy">From a single local agent to full-team threat analysis, pick the level of control your workflow needs. Upgrade or downgrade any time.</p>
+      </section>
 
-          <div class="cards">
-            <!-- Free Plan -->
-            <article class="card visual-card" style="padding: 32px;">
-              <div class="scan-lines"></div>
-              <h3 style="font-size: 24px; margin-bottom: 8px; position:relative; z-index:2;">FREE</h3>
-              <p style="font-size: 14px; color: var(--muted); margin-bottom: 24px; min-height: 40px; position:relative; z-index:2;">For getting started.</p>
-              <div style="margin-bottom: 32px; position:relative; z-index:2;">
-                <span style="font-size: 42px; font-weight: 700; font-family: 'Space Grotesk', sans-serif;">$0</span>
-                <span style="color: var(--muted); font-size: 14px;">/mo</span>
-              </div>
-              <ul style="list-style: none; padding: 0; margin: 0 0 32px; display: flex; flex-direction: column; gap: 12px; font-size: 14px; color: var(--text); position:relative; z-index:2;">
-                <li>✓ Single local agent</li>
-                <li>✓ Basic filesystem controls</li>
-                <li>✓ Basic secret/leak scanning</li>
-                <li>✓ Basic security checks</li>
-                <li>✓ Community support</li>
-              </ul>
-              <div style="position:relative; z-index:2; margin-top: auto;">
-                <a href="signup.html" class="hero-btn hero-btn-secondary" style="width: 100%; text-align: center; display: block; box-sizing: border-box;">GET STARTED</a>
-              </div>
-            </article>
+      <section class="pricing section" aria-label="Pricing plans">
+        <div class="cards">
+          <article class="plan-card">
+            <p class="card-kicker">FREE</p>
+            <h3>For getting started.</h3>
+            <div class="plan-price"><strong>$0</strong><span>/mo</span></div>
+            <ul class="plan-list">
+              <li>Single local agent</li>
+              <li>Basic filesystem controls</li>
+              <li>Basic secret/leak scanning</li>
+              <li>Basic security checks</li>
+              <li>Community support</li>
+            </ul>
+            <a href="signup.html" class="button secondary">Get started</a>
+          </article>
 
-            <!-- Plus Plan -->
-            <article class="card intelligence-card" style="padding: 32px; border-color: var(--orange);">
-              <div class="card-icon" style="top: 32px; right: 32px;">♧</div>
-              <h3 style="font-size: 24px; margin-bottom: 8px; color: var(--orange); position:relative; z-index:2;">PLUS</h3>
-              <p style="font-size: 14px; color: var(--muted); margin-bottom: 24px; min-height: 40px; position:relative; z-index:2;">For serious developers.</p>
-              <div style="margin-bottom: 32px; position:relative; z-index:2;">
-                <span style="font-size: 42px; font-weight: 700; font-family: 'Space Grotesk', sans-serif;">$20</span>
-                <span style="color: var(--muted); font-size: 14px;">/mo</span>
-              </div>
-              <ul style="list-style: none; padding: 0; margin: 0 0 32px; display: flex; flex-direction: column; gap: 12px; font-size: 14px; color: var(--text); position:relative; z-index:2;">
-                <li>✓ Everything in Free</li>
-                <li>✓ Multi-agent support</li>
-                <li>✓ Advanced security policies</li>
-                <li>✓ Dependency &amp; code scanning</li>
-                <li>✓ Detailed security reports</li>
-                <li>✓ Priority support</li>
-              </ul>
-              <div style="position:relative; z-index:2; margin-top: auto;">
-                <a href="signup.html" class="hero-btn hero-btn-primary" style="width: 100%; text-align: center; display: block; box-sizing: border-box;">UPGRADE TO PLUS</a>
-              </div>
-            </article>
+          <article class="plan-card featured">
+            <p class="card-kicker">PLUS</p>
+            <h3>For serious developers.</h3>
+            <div class="plan-price"><strong>$20</strong><span>/mo</span></div>
+            <ul class="plan-list">
+              <li>Everything in Free</li>
+              <li>Multi-agent support</li>
+              <li>Advanced security policies</li>
+              <li>Dependency &amp; code scanning</li>
+              <li>Detailed security reports</li>
+              <li>Priority support</li>
+            </ul>
+            <a href="signup.html" class="button primary">Upgrade to Plus</a>
+          </article>
 
-            <!-- Premium Plan -->
-            <article class="card code-card" style="padding: 32px;">
-              <div class="card-icon" style="top: 32px; right: 32px;">☁</div>
-              <h3 style="font-size: 24px; margin-bottom: 8px; position:relative; z-index:2;">PREMIUM</h3>
-              <p style="font-size: 14px; color: var(--muted); margin-bottom: 24px; min-height: 40px; position:relative; z-index:2;">For advanced teams/security.</p>
-              <div style="margin-bottom: 32px; position:relative; z-index:2;">
-                <span style="font-size: 42px; font-weight: 700; font-family: 'Space Grotesk', sans-serif;">$50</span>
-                <span style="color: var(--muted); font-size: 14px;">/mo</span>
-              </div>
-              <ul style="list-style: none; padding: 0; margin: 0 0 32px; display: flex; flex-direction: column; gap: 12px; font-size: 14px; color: var(--text); position:relative; z-index:2;">
-                <li>✓ Everything in Plus</li>
-                <li>✓ Advanced sandboxing</li>
-                <li>✓ Advanced threat analysis</li>
-                <li>✓ Full audit reports</li>
-                <li>✓ Expanded license activations</li>
-                <li>✓ Premium support</li>
-              </ul>
-              <div style="position:relative; z-index:2; margin-top: auto;">
-                <a href="signup.html" class="hero-btn hero-btn-secondary" style="width: 100%; text-align: center; display: block; box-sizing: border-box;">UPGRADE TO PREMIUM</a>
-              </div>
-            </article>
-          </div>
+          <article class="plan-card">
+            <p class="card-kicker">PREMIUM</p>
+            <h3>For advanced teams/security.</h3>
+            <div class="plan-price"><strong>$50</strong><span>/mo</span></div>
+            <ul class="plan-list">
+              <li>Everything in Plus</li>
+              <li>Advanced sandboxing</li>
+              <li>Advanced threat analysis</li>
+              <li>Full audit reports</li>
+              <li>Expanded license activations</li>
+              <li>Premium support</li>
+            </ul>
+            <a href="signup.html" class="button secondary">Upgrade to Premium</a>
+          </article>
         </div>
-      </div>
-    </section>
-  </main>
+      </section>
+    </main>
+
+    <footer>
+      <span>&copy; 2026 AEGIS PREFLIGHT</span>
+      <span>SECURE AI CODING &middot; BEFORE IT SHIPS</span>
+    </footer>
+  </div>
 
   <script src="../js/theme.js"></script>
   <script src="../js/navigation.js"></script>
