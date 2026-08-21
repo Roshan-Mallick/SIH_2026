@@ -1,10 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Info · Aegis PreFlight</title><link rel="stylesheet" href="info-theme.css"></head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Aegis PreFlight info — technology stack and competitive security matrix for AI coding agents." />
+  <title>Info · Aegis PreFlight</title>
+  <link rel="stylesheet" href="../css/pages/info-theme.css" />
+</head>
 <body>
 <main class="page-shell">
-<header class="site-nav"><a class="brand" href="product.html"><span class="brand-mark">◈</span><span>AEGIS<small>PREFLIGHT</small></span></a><nav class="nav-links"><a href="product.html">HOME</a><a href="#about">ABOUT</a><a href="product.html">PRODUCT</a><a href="#stack">PRICING</a><a class="active" href="info-themed.html">INFO</a><a href="#contact">CONTACT</a><button class="theme-button" aria-label="Theme">☼</button></nav></header>
-<section class="section" id="about"><p class="eyebrow">AI CODE SECURITY · PREFLIGHT</p><h1>Technology that<br><span style="color:var(--orange)">keeps agents accountable.</span></h1><p class="lead">Aegis PreFlight combines a cloud product layer with a local desktop security application to sandbox, monitor, scan, and validate AI-generated code.</p></section>
-<section class="section tech-stack-section" id="stack"><div class="section-heading"><p class="eyebrow">01 · TECHNOLOGY STACK</p><h2>Built for secure,<br>local-first execution.</h2><p>The website manages the account and product layer. The desktop application performs local sandboxing, policy enforcement, scanning, local AI, and reporting.</p></div><div class="tech-stack-grid"><article><span>WEB PLATFORM</span><h3>Next.js + React</h3><p>Landing page, dashboard, account, and downloads.</p></article><article><span>UI</span><h3>Tailwind CSS</h3><p>Responsive application interface.</p></article><article><span>BACKEND & DATABASE</span><h3>Supabase + PostgreSQL</h3><p>Authentication, users, licenses, subscriptions, and metadata.</p></article><article><span>PAYMENTS & HOSTING</span><h3>Stripe + Vercel</h3><p>Subscription billing and web deployment.</p></article><article><span>DESKTOP</span><h3>Java + JavaFX</h3><p>Cross-platform desktop interface and orchestration.</p></article><article><span>SECURITY ENGINE</span><h3>C++20/23 + CMake</h3><p>Low-level runtime security operations through local IPC.</p></article><article><span>SANDBOX</span><h3>Docker</h3><p>Isolated agent execution with filesystem, network, process, and resource policies.</p></article><article><span>LOCAL AI</span><h3>Ollama + 2–3B model</h3><p>Local explanations and reports from structured evidence.</p></article><article><span>SCANNING & STORAGE</span><h3>Gitleaks + audit tools + SQLite</h3><p>Deterministic security scanning and local audit storage.</p></article><article><span>REPORTS & DISTRIBUTION</span><h3>HTML, JSON, SARIF + GitHub Releases</h3><p>Actionable reports and installers for Windows, Linux, and macOS.</p></article></div></section>
-<section class="section dark-panel" id="contact"><div class="section-heading"><p class="eyebrow">02 · COMPETITIVE MATRIX</p><h2>Compare agent<br>security capabilities.</h2><p>Runtime protection, scanning, remediation, and release validation in one view.</p></div><div class="comparison-table-wrap"><table class="comparison-table"><thead><tr><th>Capability</th><th>Aegis PreFlight</th><th>nono</th><th>Claude Sandbox</th><th>SecurePilot</th><th>Semgrep Guardian</th></tr></thead><tbody><tr><th>Agent sandbox</th><td>✅</td><td>✅</td><td>✅</td><td>✕</td><td>✕</td></tr><tr><th>Filesystem restrictions</th><td>✅</td><td>✅</td><td>✅</td><td>✕</td><td>✕</td></tr><tr><th>Network restrictions</th><td>✅</td><td>✅</td><td>✅</td><td>✕</td><td>✕</td></tr><tr><th>Credential protection</th><td>✅</td><td>✅</td><td>✅</td><td>✕</td><td>✕</td></tr><tr><th>Multiple agents</th><td>✅</td><td>✅</td><td>⚠️</td><td>N/A</td><td>✅</td></tr><tr><th>Secret scanning</th><td>✅</td><td>✕ / limited</td><td>✕</td><td>✅</td><td>✅</td></tr><tr><th>SAST / code vulnerability scan</th><td>✅</td><td>✕</td><td>✕</td><td>✅</td><td>✅</td></tr><tr><th>Dependency CVEs</th><td>✅</td><td>✕</td><td>✕</td><td>✅</td><td>✅</td></tr><tr><th>Post-generation security gate</th><td>✅</td><td>✕</td><td>✕</td><td>✅</td><td>✅</td></tr><tr><th>Agent automatically fixes findings</th><td>✅</td><td>✕</td><td>⚠️</td><td>✅</td><td>✅</td></tr><tr><th>Rescan after fix</th><td>✅</td><td>✕</td><td>✕</td><td>⚠️</td><td>✅</td></tr><tr><th>Deterministic final verdict</th><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td></tr><tr><th>Unified entry + exit security</th><td>✅</td><td>✕</td><td>✕</td><td>✕</td><td>✕</td></tr></tbody></table></div></section>
-</main></body></html>
+  <header class="site-nav">
+    <a class="brand" href="../index.html"><img id="theme-logo" data-base-path="../" src="../assets/images/logo-dark.png" alt="Aegis" /></a>
+    <nav class="nav-links">
+      <a href="../index.html">HOME</a>
+      <a href="#about">ABOUT</a>
+      <a href="product.html">PRODUCT</a>
+      <a href="pricing.html">PRICING</a>
+      <a class="active" href="info-themed.html" aria-current="page">INFO</a>
+      <a href="#contact">CONTACT</a>
+      <button class="theme-button" type="button" aria-label="Switch to light mode" aria-pressed="false">&#9728;</button>
+    </nav>
+  </header>
+
+  <section class="section" id="about">
+    <p class="eyebrow">AI CODE SECURITY &middot; PREFLIGHT</p>
+    <h1>Technology that<br><span style="color:var(--orange)">keeps agents accountable.</span></h1>
+    <p class="lead">Aegis PreFlight combines a cloud product layer with a local desktop security application to sandbox, monitor, scan, and validate AI-generated code.</p>
+    <div class="hero-actions">
+      <a class="button primary" href="#stack">Explore the stack <span>&nearr;</span></a>
+      <a class="button secondary" href="../index.html">Back to home</a>
+    </div>
+  </section>
+
+  <section class="section tech-stack-section reveal" id="stack">
+    <div class="section-heading">
+      <p class="eyebrow">01 &middot; TECHNOLOGY STACK</p>
+      <h2>Built for secure,<br>local-first execution.</h2>
+      <p>The website manages the account and product layer. The desktop application performs local sandboxing, policy enforcement, scanning, local AI, and reporting.</p>
+    </div>
+    <div class="tech-stack-grid">
+      <article class="reveal"><span>WEB PLATFORM</span><h3>Next.js + React</h3><p>Landing page, dashboard, account, and downloads.</p></article>
+      <article class="reveal"><span>UI</span><h3>Tailwind CSS</h3><p>Responsive application interface.</p></article>
+      <article class="reveal"><span>BACKEND &amp; DATABASE</span><h3>Supabase + PostgreSQL</h3><p>Authentication, users, licenses, subscriptions, and metadata.</p></article>
+      <article class="reveal"><span>PAYMENTS &amp; HOSTING</span><h3>Stripe + Vercel</h3><p>Subscription billing and web deployment.</p></article>
+      <article class="reveal"><span>DESKTOP</span><h3>Java + JavaFX</h3><p>Cross-platform desktop interface and orchestration.</p></article>
+      <article class="reveal"><span>SECURITY ENGINE</span><h3>C++20/23 + CMake</h3><p>Low-level runtime security operations through local IPC.</p></article>
+      <article class="reveal"><span>SANDBOX</span><h3>Docker</h3><p>Isolated agent execution with filesystem, network, process, and resource policies.</p></article>
+      <article class="reveal"><span>LOCAL AI</span><h3>Ollama + 2&ndash;3B model</h3><p>Local explanations and reports from structured evidence.</p></article>
+      <article class="reveal"><span>SCANNING &amp; STORAGE</span><h3>Gitleaks + audit tools + SQLite</h3><p>Deterministic security scanning and local audit storage.</p></article>
+      <article class="reveal"><span>REPORTS &amp; DISTRIBUTION</span><h3>HTML, JSON, SARIF + GitHub Releases</h3><p>Actionable reports and installers for Windows, Linux, and macOS.</p></article>
+    </div>
+  </section>
+
+  <section class="section dark-panel reveal" id="contact">
+    <div class="section-heading">
+      <p class="eyebrow">02 &middot; COMPETITIVE MATRIX</p>
+      <h2>Compare agent<br>security capabilities.</h2>
+      <p>Runtime protection, scanning, remediation, and release validation in one view.</p>
+    </div>
+    <div class="comparison-table-wrap">
+      <table class="comparison-table">
+        <thead><tr><th>Capability</th><th>Aegis PreFlight</th><th>nono</th><th>Claude Sandbox</th><th>SecurePilot</th><th>Semgrep Guardian</th></tr></thead>
+        <tbody>
+          <tr><th>Agent sandbox</th><td>&#9989;</td><td>&#9989;</td><td>&#9989;</td><td>&#10005;</td><td>&#10005;</td></tr>
+          <tr><th>Filesystem restrictions</th><td>&#9989;</td><td>&#9989;</td><td>&#9989;</td><td>&#10005;</td><td>&#10005;</td></tr>
+          <tr><th>Network restrictions</th><td>&#9989;</td><td>&#9989;</td><td>&#9989;</td><td>&#10005;</td><td>&#10005;</td></tr>
+          <tr><th>Credential protection</th><td>&#9989;</td><td>&#9989;</td><td>&#9989;</td><td>&#10005;</td><td>&#10005;</td></tr>
+          <tr><th>Multiple agents</th><td>&#9989;</td><td>&#9989;</td><td>&#9888;&#65039;</td><td>N/A</td><td>&#9989;</td></tr>
+          <tr><th>Secret scanning</th><td>&#9989;</td><td>&#10005; / limited</td><td>&#10005;</td><td>&#9989;</td><td>&#9989;</td></tr>
+          <tr><th>SAST / code vulnerability scan</th><td>&#9989;</td><td>&#10005;</td><td>&#10005;</td><td>&#9989;</td><td>&#9989;</td></tr>
+          <tr><th>Dependency CVEs</th><td>&#9989;</td><td>&#10005;</td><td>&#10005;</td><td>&#9989;</td><td>&#9989;</td></tr>
+          <tr><th>Post-generation security gate</th><td>&#9989;</td><td>&#10005;</td><td>&#10005;</td><td>&#9989;</td><td>&#9989;</td></tr>
+          <tr><th>Agent automatically fixes findings</th><td>&#9989;</td><td>&#10005;</td><td>&#9888;&#65039;</td><td>&#9989;</td><td>&#9989;</td></tr>
+          <tr><th>Rescan after fix</th><td>&#9989;</td><td>&#10005;</td><td>&#10005;</td><td>&#9888;&#65039;</td><td>&#9989;</td></tr>
+          <tr><th>Deterministic final verdict</th><td>&#9989;</td><td>&#9989;</td><td>&#9989;</td><td>&#9989;</td><td>&#9989;</td></tr>
+          <tr><th>Unified entry + exit security</th><td>&#9989;</td><td>&#10005;</td><td>&#10005;</td><td>&#10005;</td><td>&#10005;</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<script src="../js/navigation.js"></script>
+<script src="info-themed.js"></script>
+</body>
+</html>
