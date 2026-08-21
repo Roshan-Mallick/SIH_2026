@@ -83,16 +83,50 @@
 })();
 
 // ---------- Contact form ----------
+// Submissions are relayed to the team's Discord via a Supabase Edge Function
+// (contact-webhook). The Discord webhook itself stays server-side as a secret.
+const CONTACT_FUNCTION_URL = 'https://aiexfmkkvqacyxrgjdgl.supabase.co/functions/v1/contact-webhook';
+const CONTACT_ANON_KEY = window.__AEGIS_SUPABASE_CONFIG__?.anonKey || 'sb_publishable_c1tgCLDnsaa4qVSHLWH_9g_1WIU9Hwp';
+
 const form = document.getElementById('contactForm');
 const note = document.getElementById('formNote');
+const submitBtn = form ? form.querySelector('button[type="submit"]') : null;
 
 if (form) {
-  form.addEventListener('submit', function (e) {
+  form.addEventListener('submit', async function (e) {
     e.preventDefault();
-    // TODO: wire to backend / email endpoint
-    // fetch('/api/contact', { method: 'POST', body: new FormData(form) })
-    note.textContent = "Thanks — we'll get back to you within 1 business day.";
-    note.style.color = 'var(--accent)';
-    form.reset();
+
+    const payload = {
+      name: document.getElementById('name').value,
+      email: document.getElementById('email').value,
+      topic: document.getElementById('topic').value,
+      message: document.getElementById('message').value,
+    };
+
+    submitBtn.disabled = true;
+    note.textContent = 'Sending your message...';
+    note.style.color = 'var(--muted)';
+
+    try {
+      const res = await fetch(CONTACT_FUNCTION_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'apikey': CONTACT_ANON_KEY },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok || !data.ok) {
+        throw new Error(data.error || 'Message could not be sent.');
+      }
+
+      note.textContent = "Thanks — we'll get back to you within 1 business day.";
+      note.style.color = 'var(--accent)';
+      form.reset();
+    } catch (err) {
+      note.textContent = err.message || 'Something went wrong. Please try again.';
+      note.style.color = '#ff4d4d';
+    } finally {
+      submitBtn.disabled = false;
+    }
   });
 }
