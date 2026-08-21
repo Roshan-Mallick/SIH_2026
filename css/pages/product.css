@@ -59,11 +59,19 @@
   padding: 58px 0;
 }
 
+.dark-panel.section {
+  padding: 58px;
+}
+
 .section-heading h2 {
   margin-top: 0;
 }
 
 @media (max-width: 800px) {
+  .dark-panel.section {
+    padding: 36px 24px;
+  }
+
   .flow-card {
     flex-direction: column;
     gap: 12px;

@@ -1,4 +1,6 @@
 .page-shell {
+  position: relative;
+  z-index: 1;
   max-width: 1165px;
   margin: 28px auto;
   border: 1px solid var(--line);

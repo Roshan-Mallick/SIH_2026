@@ -10,8 +10,32 @@
 }
 
 .hero.compact {
-  min-height: auto;
-  padding-bottom: 65px;
+  min-height: 520px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  padding: 72px 0 96px;
+  text-align: center;
+}
+
+.page-shell .hero.compact > * {
+  width: min(780px, 100%);
+}
+
+.page-shell .hero.compact h1 {
+  margin: 0 0 24px;
+}
+
+.page-shell .hero.compact h1 em,
+.page-shell .hero.compact h2 em {
+  color: var(--orange);
+  font-style: normal;
+}
+
+.page-shell .hero.compact .hero-copy,
+.page-shell .hero.compact .lead {
+  margin: 0;
 }
 
 .hero-bg {
@@ -153,6 +177,29 @@ body.light-mode .hero-title {
   max-width: 540px;
 }
 
+.pricing-intro {
+  min-height: 360px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.pricing-intro .hero-eyebrow,
+.pricing-intro .hero-title,
+.pricing-intro .hero-desc {
+  width: min(780px, 100%);
+}
+
+.pricing-intro .hero-title {
+  margin-bottom: 0;
+}
+
+.pricing-intro .hero-desc {
+  margin: 20px auto 0;
+}
+
 .hero-workflow {
   display: inline-flex;
   align-items: center;
@@ -265,7 +312,7 @@ body.light-mode .hero-title {
 .page-orbs {
   position: fixed;
   inset: 0;
-  z-index: -1;
+  z-index: 0;
   overflow: hidden;
   pointer-events: none;
 }
